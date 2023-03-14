@@ -2,13 +2,11 @@
 //
 
 #include "students-database.h"
-#include "Student.h"
 
 using namespace std;
 
 int main()
 {
-	cout << "Hello CMake." << endl;
-	Student::f();
+	cout << "Hello CMake." << endl << "RNSERSEHR" << "PIZDEC";
 	return 0;
 }
