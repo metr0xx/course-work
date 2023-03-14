@@ -2,5 +2,6 @@
 #include <vector>
 
 struct Session {
+	int Semester;
 	vector<Subject> Subjects;
 };
