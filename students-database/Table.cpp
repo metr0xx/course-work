@@ -13,7 +13,7 @@ void Table::drawBorder(int tableWidth) {
     cout << '-' << endl;
 }
 
-void Table::formatColumn(string str, int maxLen, int tableWidth, bool header = false) {
+void Table::formatColumn(string str, int maxLen, int tableWidth, bool header) {
     cout << "| " << str;
     header ? cout.width(tableWidth - str.length() - 2) : cout.width(maxLen - str.length() - 2);
     cout.fill(' ');
@@ -36,7 +36,7 @@ int Table:: getMaxLen(vector<string> names) {
     return max + 4;
 }
 
-void Table::drawTable(vector<vector<string>> lines, vector<string> columns, string title, bool shouldDrawBottom = false) {
+void Table::drawTable(vector<vector<string>> lines, vector<string> columns, string title, bool shouldDrawBottom) {
 
     vector<int> params;
     for (int i = 0; i < columns.size(); i++) {
