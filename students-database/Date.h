@@ -1,3 +1,5 @@
+#pragma once
+
 struct Date {
 	unsigned short int Day;
 	unsigned short int Month;
