@@ -5,5 +5,5 @@
 
 struct Session {
 	int Semester;
-	vector<Subject> Subjects;
+	Subject Subjects[10];
 };

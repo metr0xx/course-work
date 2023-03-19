@@ -5,6 +5,6 @@
 using namespace std;
 
 struct Subject {
-	string Name;
+	char Name[100];
 	int Mark;
 };
