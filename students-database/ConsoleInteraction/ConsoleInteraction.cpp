@@ -7,15 +7,24 @@
 
 using namespace std;
 
-int ConsoleInteraction::GetValue() {
-	int value;
+void ConsoleInteraction::GetValue(int& value) {
 	while (!(cin >> value))
 	{
 		cin.clear(); 
 		cin.ignore(1000, '\n');
 		cout << "Неверное значение перематра\n";
 	}
-	return value;
+}
+
+void ConsoleInteraction::GetValue() {
+	
+	char value[100];
+	while (!(gets_s(value)))
+	{
+		cin.clear();
+		cin.ignore(1000, '\n');
+		cout << "Неверное значение перематра\n";
+	}
 }
 
 string ConsoleInteraction::editStudentHandler(int studentId, string value, int param) {
@@ -49,7 +58,7 @@ void ConsoleInteraction::Start() {
 	while (true) {
 		cout << "Доступные команды:\n1 - Показать список студентов\n2 - Добавить нового студента\n" <<
 			"3 - Редактировать студента\n4 - Удалить студента\n";
-		command = ConsoleInteraction::GetValue();
+		ConsoleInteraction::GetValue(command);
 
 		vector<Student> students = FileInteraction::ReadData();
 		vector<string> studentColumnNames = {"Фамилия", "Имя", "Отчество", "Дата рождения", "Год поступления", 
@@ -58,6 +67,13 @@ void ConsoleInteraction::Start() {
 		vector<vector<string>> studentLines = Tools::StructToString(students);
 		vector<vector<string>> subjects;
 		vector<vector<string>> examRecords;
+
+		Student newStudent = {};
+
+		int sessionsCount;
+		int currSubjectsCount;
+		char sur[256];
+		//gets_s(sur);
 		
 		switch (command) {
 		case 1:
@@ -69,6 +85,62 @@ void ConsoleInteraction::Start() {
 			}
 			break;
 		case 2:
+			cout << "Type val\n";
+			gets_s(sur);
+			strcpy_s(newStudent.Name, sur);
+			//cout << "Введите фамилию студента\n";
+
+			//ConsoleInteraction::GetValue(sur);
+			//strcpy(newStudent.Surname, sur);
+
+			/*cout << "Введите имя студента\n";
+			ConsoleInteraction::GetValue(newStudent.Name);
+
+			cout << "Введите отчество студента\n";
+			ConsoleInteraction::GetValue(newStudent.Patronymic);
+
+			cout << "Введите число рождения студента\n";
+			ConsoleInteraction::GetValue(newStudent.BirthData.Day);
+
+			cout << "Введите месяц рождения студента (от 1 до 12)\n";
+			ConsoleInteraction::GetValue(newStudent.BirthData.Month);
+
+			cout << "Введите год рождения студента\n";
+			ConsoleInteraction::GetValue(newStudent.BirthData.Year);
+
+			cout << "Введите год поступления в институт студента\n";
+			ConsoleInteraction::GetValue(newStudent.AdmissionYear);
+
+			cout << "Введите факультет студента\n";
+			ConsoleInteraction::GetValue(newStudent.Institute);
+
+			cout << "Введите кафедру студента\n";
+			ConsoleInteraction::GetValue(newStudent.Department);
+
+			cout << "Введите группу студента\n";
+			ConsoleInteraction::GetValue(newStudent.Group);
+
+			cout << "Введите номер зачетной книжки студента\n";
+			ConsoleInteraction::GetValue(newStudent.RecordBook);
+
+			cout << "Введите пол студента (Число, отличное от 0 - мужчина, 0 - женщина)\n";
+			ConsoleInteraction::GetValue(newStudent.Gender);*/
+
+			/*cout << "Введите количество сданных сессий (максимум 9)\n";
+			ConsoleInteraction::GetValue(sessionsCount);*/
+
+			/*for (int i = 0; i < sessionsCount; i++) {
+				newStudent.StudentSession[i].Semester = i + 1;
+				cout << "Введите количество предметов в сессии " << i + 1 << " (максимум 10)\n";
+				ConsoleInteraction::GetValue(currSubjectsCount);
+				for (int j = 0; j < currSubjectsCount; j++) {
+					cout << "Введите название " << j + 1 << "-го предмета в " << i + 1 << "-й сессии\n";
+					ConsoleInteraction::GetValue(newStudent.StudentSession[i].Subjects[j].Name);
+					cout << "Введите оценку за " << j + 1 << "-й предмет в " << i + 1 << "-й сессии\n";
+					ConsoleInteraction::GetValue(newStudent.StudentSession[i].Subjects[j].Mark);*/
+				//}
+			//}
+			FileInteraction::AddStudent({ newStudent });
 
 			break;
 		case 3:
