@@ -22,9 +22,7 @@ string ConsoleInteraction::editStudentHandler(int studentId, string value, int p
 	string message = "";
 	switch (param) {
 	case 1:
-		cout << "hui";
 		FileInteraction::EditStudent(studentId, value, param - 1);
-		cout << "Abobaaaaaaaaaaa";
 		break;
 	case (3, 4, 5):
 		break;
@@ -56,15 +54,22 @@ void ConsoleInteraction::Start() {
 		vector<Student> students = FileInteraction::ReadData();
 		vector<string> studentColumnNames = {"Фамилия", "Имя", "Отчество", "Дата рождения", "Год поступления", 
 			"Факультет", "Кафедра", "Группа", "Номер зачетной книжки", "Пол"};
+		vector<string> examColumnNames = { "Номер семестра", "Название предмета", "Оценка" };
 		vector<vector<string>> studentLines = Tools::StructToString(students);
-		string studentTitle = "Студент";
+		vector<vector<string>> subjects;
+		vector<vector<string>> examRecords;
+		
 		switch (command) {
 		case 1:
-			for (auto line : studentLines) {
-				Table::DrawTable({ line }, studentColumnNames, studentTitle);
+			for (int i = 0; i < studentLines.size(); i++) {
+				Table::DrawTable({ studentLines[i]}, studentColumnNames, "Студент " + to_string(i + 1));
+				Tools::StructToString(students[i].StudentSession, subjects);
+				Table::DrawTable(subjects, examColumnNames, "Сессии");
+				subjects = {};
 			}
 			break;
 		case 2:
+
 			break;
 		case 3:
 			//while (studentId < 0) {
