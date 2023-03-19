@@ -9,19 +9,24 @@
 
 using namespace std;
 
+
 int main()
 {
 	SetConsoleCP(1251);
 	SetConsoleOutputCP(1251);
-	Session session = { 1, { {"footbal", 4} , {"matan", 4}} };
+	Session session = { 1, { {"footbal", 4} , {"matan", 4}} , 2};
 	vector<Student> student = { {"Aboba", "Testov", "Testovich", {1, 2, 1010},
-	1000, "ER", "KB-1", "BASO", "FWJIO43E", 1, session } };
+	1000, "ER", "KB-1", "BASO", "FWJIO43E", 1, session, 1 } };
 	//FileInteraction::AddStudent(student);
 	vector<Student> students = FileInteraction::ReadData();
-	for (auto s : students) {
+	/*for (auto s : students) {
 		cout << s.RecordBook << endl;
-	}
-
+	}*/
+	char t[10];
+	cout << "type\n";
+	gets_s(t);
+	//FileInteraction::AddStudent({ s });
 	ConsoleInteraction::Start();
+
 	return 0;
 }
