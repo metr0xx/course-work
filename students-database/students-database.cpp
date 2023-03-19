@@ -13,14 +13,14 @@ int main()
 {
 	SetConsoleCP(1251);
 	SetConsoleOutputCP(1251);
-	//Session session = { 1, { {"footbal", 4} , {"matan", 4}} };
-	//vector<Student> student = { {"Aboba", "Testov", "Testovich", {1, 2, 1010},
-	//1000, "ER", "KB-1", "BASO", "FWJIO43E", 1, session } };
-	////FileInteraction::AddStudent(student);
-	//vector<Student> students = FileInteraction::ReadData();
-	//for (auto s : students) {
-	//	cout << s.RecordBook << endl;
-	//}
+	Session session = { 1, { {"footbal", 4} , {"matan", 4}} };
+	vector<Student> student = { {"Aboba", "Testov", "Testovich", {1, 2, 1010},
+	1000, "ER", "KB-1", "BASO", "FWJIO43E", 1, session } };
+	//FileInteraction::AddStudent(student);
+	vector<Student> students = FileInteraction::ReadData();
+	for (auto s : students) {
+		cout << s.RecordBook << endl;
+	}
 
 	ConsoleInteraction::Start();
 	return 0;

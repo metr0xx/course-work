@@ -13,7 +13,6 @@ int Tools::FindStudentByRecordBook(char recordBook[]) {
 	for (int i = 0; i < sizeof(students); i++) {
 		if (strcmp(students[i].RecordBook, recordBook)) { return i + 1; };
 	}
-
 	return 0;
 }
 
@@ -39,6 +38,16 @@ vector<vector<string>> Tools::StructToString(vector<Student> students) {
 			student.Gender ? "Ì" : "Æ"
 			});
 	}
-
 	return formattedStudents;
 }
+
+void Tools::StructToString(Session sessions[], vector<vector<string>>& subjects) {
+	for (int i = 0; i < sizeof(sessions); i++) {
+		if (!sessions[i].Semester) break;
+		for (int j = 0; j < sizeof(sessions[i].Subjects); j++ ) {
+			if (!sessions[i].Subjects[j].Mark) break;
+			subjects.push_back({ to_string(sessions[i].Semester), to_string(sessions[i].Subjects[j].Mark), sessions[i].Subjects[j].Name});
+		}
+	}
+}
+
