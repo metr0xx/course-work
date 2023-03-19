@@ -1,5 +1,5 @@
 #include "FileInteraction.h"
-#include "../Student.h"
+#include "../Models/Student.h"
 #include <iostream>
 #include <vector>
 #include <string>

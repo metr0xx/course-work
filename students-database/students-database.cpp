@@ -3,8 +3,8 @@
 #include <iostream>
 #include <windows.h>
 #include "./ConsoleInteraction/ConsloleInteraction.h"
-#include"./Subject.h"
-#include "./Student.h"
+#include "Models/Subject.h"
+#include "Models/Student.h"
 #include "FileInteraction/FileInteraction.h"
 
 using namespace std;

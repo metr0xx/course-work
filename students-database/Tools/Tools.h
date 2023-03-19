@@ -1,8 +1,8 @@
 #include <string>
 #include <vector>
-#include "../Date.h"
-#include "../Student.h"
-#include "../Session.h"
+#include "../Models/Date.h"
+#include "../Models/Student.h"
+#include "../Models/Session.h"
 
 using namespace std;
 

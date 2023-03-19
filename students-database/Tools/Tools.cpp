@@ -1,7 +1,7 @@
 #include "Tools.h"
-#include "../Student.h"
+#include "../Models/Student.h"
 #include "../FileInteraction/FileInteraction.h"
-#include "../Date.h"
+#include "../Models/Date.h"
 #include <vector>
 #include <string>
 
