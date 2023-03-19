@@ -24,7 +24,7 @@ string Tools::DateToString(Date date) {
 vector<vector<string>> Tools::StructToString(vector<Student> students) {
 	vector<vector<string>> formattedStudents;
 
-	for (auto student : students) {
+	for (auto& student : students) {
 		formattedStudents.push_back({
 			student.Surname,
 			student.Name,
@@ -46,7 +46,7 @@ void Tools::StructToString(Session sessions[], vector<vector<string>>& subjects)
 		if (!sessions[i].Semester) break;
 		for (int j = 0; j < sizeof(sessions[i].Subjects); j++ ) {
 			if (!sessions[i].Subjects[j].Mark) break;
-			subjects.push_back({ to_string(sessions[i].Semester), to_string(sessions[i].Subjects[j].Mark), sessions[i].Subjects[j].Name});
+			subjects.push_back({ to_string(sessions[i].Semester), sessions[i].Subjects[j].Name, to_string(sessions[i].Subjects[j].Mark) });
 		}
 	}
 }
