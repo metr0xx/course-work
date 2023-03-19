@@ -13,10 +13,11 @@ struct Student {
 	char Patronymic[100];
 	Date BirthData;
 	unsigned short int AdmissionYear;
-	char Institute[30];
+	char Institute[100];
 	char Department[10];
 	char Group[10];
 	char RecordBook[10];
 	bool Gender;
 	Session StudentSession[9];
+	int SessionCount;
 };
