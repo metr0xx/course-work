@@ -15,7 +15,7 @@ struct Student {
 	unsigned short int AdmissionYear;
 	char Institute[100];
 	char Department[10];
-	char Group[10];
+	char Group[15];
 	char RecordBook[10];
 	bool Gender;
 	Session StudentSession[9];
