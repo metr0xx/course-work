@@ -34,5 +34,8 @@ void FileInteraction::EditStudent(int studentId, string value, int valueId) {
  }
 
 void FileInteraction::DeleteStudent(int studentId) {
-
+	vector<Student> students = FileInteraction::ReadData();
+	students.erase(students.begin() + studentId);
+	remove(PATH);
+	FileInteraction::AddStudent(students);
 }

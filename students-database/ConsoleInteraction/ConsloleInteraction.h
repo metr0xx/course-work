@@ -5,8 +5,9 @@ using namespace std;
 class ConsoleInteraction {
 	public:
 		static void Start();
-		static void GetValue(int& value);
-		static void GetValue();
+		template<typename T>
+		static void GetValue(T& value);
+		static void GetValue(char value[], bool afterInt = false);
 
 	private:
 		static string editStudentHandler(int studentId, string value, int param);
