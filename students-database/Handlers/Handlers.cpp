@@ -5,7 +5,7 @@
 #include "../Models/Student.h"
 #include "Handlers.h"
 #include <string>
-#include "../ConsoleInteraction/ConsloleInteraction.cpp"
+#include "../ConsoleInteraction/ConsloleInteraction.h"
 
 void Handlers::AddStudentHandler() {
 	Student newStudent = {};
@@ -81,7 +81,7 @@ void Handlers::EditStudentHandler(int studentId, vector<Student> studentsList, i
 		break;
 	case 3:
 		cout << "Введите новое отчество студента\n";
-		ConsoleInteraction::GetValue(studentsList[studentId].Patronymic);
+		ConsoleInteraction::GetValue(studentsList[studentId].Patronymic, 1);
 		break;
 	case 4:
 		cout << "Введите новое число рождения студента\n";
