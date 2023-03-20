@@ -4,14 +4,15 @@
 #include "../Models/Date.h"
 #include <vector>
 #include <string>
+#include <iostream>
 
 using namespace std;
 
 int Tools::FindStudentByRecordBook(char recordBook[]) {
 	vector<Student> students = FileInteraction::ReadData();
 
-	for (int i = 0; i < sizeof(students); i++) {
-		if (strcmp(students[i].RecordBook, recordBook)) { return i + 1; };
+	for (int i = 0; i < students.size(); i++) {
+		if (!strcmp(students[i].RecordBook, recordBook)) { return i + 1; };
 	}
 	return 0;
 }
