@@ -29,8 +29,9 @@ void FileInteraction::AddStudent(vector <Student> students) {
 	file.close();
 }
 
-void FileInteraction::EditStudent(int studentId, string value, int valueId) {
-	
+void FileInteraction::EditStudent(vector <Student> students) {
+	remove(PATH);
+	FileInteraction::AddStudent(students);
  }
 
 void FileInteraction::DeleteStudent(int studentId) {
