@@ -10,5 +10,5 @@ struct Tools {
 	static int FindStudentByRecordBook(char recordBook[]);
 	static string DateToString(Date date);
 	static vector<vector<string>> StructToString(vector<Student> students);
-	static void StructToString(Session sessions[], vector<vector<string>>& subjects);
+	static void StructToString(Student& student, vector<vector<string>>& subjects);
 };

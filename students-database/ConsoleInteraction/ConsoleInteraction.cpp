@@ -50,7 +50,7 @@ void ConsoleInteraction::Start() {
         case 1:
             for (int i = 0; i < studentLines.size(); i++) {
                 Table::DrawTable({ studentLines[i] }, studentColumnNames, "Студент " + to_string(i + 1));
-                Tools::StructToString(students[i].StudentSession, subjects);
+                Tools::StructToString(students[i], subjects);
                 Table::DrawTable(subjects, examColumnNames, "Сессии");
                 subjects = {};
             }

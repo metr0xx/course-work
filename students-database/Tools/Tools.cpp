@@ -42,12 +42,12 @@ vector<vector<string>> Tools::StructToString(vector<Student> students) {
 	return formattedStudents;
 }
 
-void Tools::StructToString(Session sessions[], vector<vector<string>>& subjects) {
-	for (int i = 0; i < sizeof(sessions); i++) {
-		if (!sessions[i].Semester) break;
-		for (int j = 0; j < sizeof(sessions[i].Subjects); j++ ) {
-			if (!sessions[i].Subjects[j].Mark) break;
-			subjects.push_back({ to_string(sessions[i].Semester), sessions[i].Subjects[j].Name, to_string(sessions[i].Subjects[j].Mark) });
+void Tools::StructToString(Student& student, vector<vector<string>>& subjects) {
+	for (int i = 0; i < student.SessionCount; i++) {
+		for (int j = 0; j < student.StudentSession[i].SubjectsCount; j++ ) {
+			subjects.push_back({ to_string(student.StudentSession[i].Semester), 
+				student.StudentSession[i].Subjects[j].Name, 
+				to_string(student.StudentSession[i].Subjects[j].Mark) });
 		}
 	}
 }
