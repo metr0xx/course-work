@@ -67,7 +67,12 @@ void Handlers::AddStudentHandler() {
 void Handlers::EditStudentHandler(int studentId, vector<Student> studentsList, int param) {
 	vector<Student> students = FileInteraction::ReadData();
 
-
+	int sessionParam;
+	int sessionNumber;
+	int prevSubjectsCount;
+	int sessionEditNumber;
+	int subjectEditNumber;
+	int subjectEditParam;
 	if (!param) return;
 
 	switch (param) {
@@ -84,34 +89,112 @@ void Handlers::EditStudentHandler(int studentId, vector<Student> studentsList, i
 		ConsoleInteraction::GetValue(studentsList[studentId].Patronymic, 1);
 		break;
 	case 4:
-		cout << "¬ведите новое число рождени€ студента\n";
+		cout << "¬ведите число рождени€ студента\n";
 		ConsoleInteraction::GetValue(studentsList[studentId].BirthData.Day);
 		break;
 	case 5:
-		cout << "¬ведите новый мес€ц рождени€ студента\n";
+		cout << "¬ведите мес€ц рождени€ студента\n";
 		ConsoleInteraction::GetValue(studentsList[studentId].BirthData.Month);
 		break;
 	case 6:
-		cout << "¬ведите новый год рождени€\n";
+		cout << "¬ведите год рождени€ студента\n";
 		ConsoleInteraction::GetValue(studentsList[studentId].BirthData.Year);
 		break;
 	case 7:
-		cout << "¬ведите новое им€ студента\n";
-		ConsoleInteraction::GetValue(studentsList[studentId].Name);
+		cout << "¬ведите год поступлени€ в институт студента\n";
+		ConsoleInteraction::GetValue(studentsList[studentId].AdmissionYear);
 		break;
 	case 8:
-		cout << "¬ведите новое им€ студента\n";
-		ConsoleInteraction::GetValue(studentsList[studentId].Name);
+		cout << "¬ведите факультет студента\n";
+		ConsoleInteraction::GetValue(studentsList[studentId].Institute);
 		break;
 	case 9:
+		cout << "¬ведите кафедру студента\n";
+		ConsoleInteraction::GetValue(studentsList[studentId].Department);
 		break;
 	case 10:
+		cout << "¬ведите группу студента\n";
+		ConsoleInteraction::GetValue(studentsList[studentId].Group);
 		break;
 	case 11:
+		cout << "¬ведите номер зачетной книжки студента\n";
+		ConsoleInteraction::GetValue(studentsList[studentId].RecordBook);
 		break;
 	case 12:
+		cout << "¬ведите пол студента (1 - мужчина, 0 - женщина)\n";
+		ConsoleInteraction::GetValue(studentsList[studentId].Institute);
 		break;
-	case 13: // Session
+	case 13:
+		cout << "”кажите, что нужно изменить в сесси€х\n";
+		cout << "1 - ƒобавить сессию\n2 - »зменить сессию\n";
+		do {
+			ConsoleInteraction::GetValue(sessionParam);
+			if (sessionParam != 1 && sessionParam != 2) cout << "Ќужно ввести либо 1, либо 2\n";
+		} while (sessionParam != 1 && sessionParam != 2);
+		switch (sessionParam)
+		{
+		case 1:
+			if (studentsList[studentId].SessionCount == 9) {
+				cout << "”же имеетс€ максимальное количество сессий (9)\n";
+				break;
+			}
+			sessionNumber = studentsList[studentId].SessionCount++;
+			studentsList[studentId].StudentSession[sessionNumber].Semester = sessionNumber + 1;
+			cout << "¬ведите количество предметов в сессии (максимум 10)\n";
+			ConsoleInteraction::GetValue(studentsList[studentId].StudentSession[sessionNumber].SubjectsCount);
+			for (int i = 0; i < studentsList[studentId].StudentSession[sessionNumber].SubjectsCount; i++) {
+				cout << "¬ведите название " << i + 1 << "-го предмета в сессии\n";
+				ConsoleInteraction::GetValue(studentsList[studentId].StudentSession[sessionNumber].Subjects[i].Name, 1);
+				cout << "¬ведите оценку за " << i + 1 << "-й предмет в сессии\n";
+				ConsoleInteraction::GetValue(studentsList[studentId].StudentSession[sessionNumber].Subjects[i].Mark);
+			}
+			break;
+		case 2:
+			//TODO: draw sessions table
+			cout << "¬ведите номер сессии, данные которой нужно изменить\n";
+			ConsoleInteraction::GetValue(sessionEditNumber);
+			cout << "1 - ƒобавить предмет\n2 - »зменить данные об имеющемс€ предмете\n";
+			do { 
+				ConsoleInteraction::GetValue(subjectEditNumber);
+				if (subjectEditNumber != 1 && subjectEditNumber != 2) cout << "Ќужно ввести либо 1, либо 2\n";
+			} while (subjectEditNumber != 1 && subjectEditNumber != 2);
+
+			prevSubjectsCount = studentsList[studentId].StudentSession[sessionEditNumber - 1].SubjectsCount;
+
+			switch (subjectEditNumber)
+			{
+			case 1:
+				if (prevSubjectsCount == 10) {
+					cout << "”же имеетс€ максимальное количество предметов в сессии (10)\n";
+					break;
+				}
+				cout << "¬ведите название предмена\n";
+				ConsoleInteraction::GetValue(studentsList[studentId].StudentSession[sessionEditNumber - 1].Subjects[prevSubjectsCount].Name, 1);
+				cout << "¬ведите оценку за предмет\n";
+				ConsoleInteraction::GetValue(studentsList[studentId].StudentSession[sessionEditNumber - 1].Subjects[prevSubjectsCount].Mark);
+				studentsList[studentId].StudentSession[sessionEditNumber - 1].SubjectsCount++;
+				break;
+			case 2:
+				//TODO: draw subjects table
+				cout << "¬ведите номер предмета, данные о котором нужно изменить\n";
+				ConsoleInteraction::GetValue(subjectEditNumber);
+				cout << "1 - »зменить название\n2 - »зменить оценку\n";
+				ConsoleInteraction::GetValue(subjectEditParam);
+				switch (subjectEditParam)
+				{
+				case 1:
+					cout << "¬ведите название предмета под номером " << subjectEditNumber << endl;
+					ConsoleInteraction::GetValue(studentsList[studentId].StudentSession[sessionEditNumber - 1].Subjects[subjectEditNumber - 1].Name, 1);
+					break;
+				case 2:
+					cout << "¬ведите оценку за предмет " << studentsList[studentId].StudentSession[sessionEditNumber - 1].Subjects[subjectEditNumber - 1].Name;
+					ConsoleInteraction::GetValue(studentsList[studentId].StudentSession[sessionEditNumber - 1].Subjects[subjectEditNumber - 1].Mark);
+					break;
+				}
+				break;
+			}
+			break;
+		}
 		break;
 	}
 
