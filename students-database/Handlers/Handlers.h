@@ -3,4 +3,5 @@ struct Handlers {
 	static void EditStudentHandler();
 	static void DrawStudentsHandler();
 	static void DeleteStudentHandler();
+	static void SortStudentsHandler();
 };

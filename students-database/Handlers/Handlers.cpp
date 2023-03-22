@@ -27,6 +27,7 @@ void Handlers::DrawStudentsHandler() {
 void Handlers::AddStudentHandler() {
 
 	Student newStudent = {};
+	int gender;
 
 	cout << "Введите фамилию студента\n";
 	ConsoleInteraction::GetValue(newStudent.Surname, 1);
@@ -61,9 +62,23 @@ void Handlers::AddStudentHandler() {
 	cout << "Введите номер зачетной книжки студента\n";
 	ConsoleInteraction::GetValue(newStudent.RecordBook);
 
-	cout << "Введите пол студента (Число, отличное от 0 - мужчина, 0 - женщина)\n";
-	ConsoleInteraction::GetValue(newStudent.Gender);
+	do {
+		cout << "Введите пол студента\n0 - женщина\n1 - мужчина\n2 - небинарная личность\n";
 
+		ConsoleInteraction::GetValue(gender);
+		switch (gender) {
+
+		case (0, 1):
+			newStudent.Gender = gender;
+			break;
+		case 2:
+			cout << "Гендера всего 2 :)\n";
+			break;
+		}
+	} while (gender == 2);
+
+	
+	
 	cout << "Введите количество сданных сессий (максимум 9)\n";
 	ConsoleInteraction::GetValue(newStudent.SessionCount);
 
@@ -101,9 +116,11 @@ void Handlers::EditStudentHandler() {
 	for (int i = 0; i < studentsList.size(); i++) {
 		cout << i + 1 << " - " << studentsList[i].RecordBook << endl;
 	}
+	cout << "\n0 - В главное меню\n";
+
 	do {
 		ConsoleInteraction::GetValue(studentId);
-
+		if (!studentId) return;
 		if (studentId < 0 || studentId > studentsList.size()) cout << "Нужно выбрать число от 1 до " << studentsList.size() << endl;
 	} while (studentId < 0 || studentId > studentsList.size());
 
@@ -111,13 +128,16 @@ void Handlers::EditStudentHandler() {
 
 	cout << "Введите номер изменяемого параметра\n" <<
 		"1 - Фамилия\n2 - Имя\n3 - Отчество\n4 - Число рождения\n5 - Месяц роэждения\n6 - Год рождения\n" <<
-		"7 - Год поступления в институт\n8 - Факультет (институт)\n9 - Кафедра\n10 - Группа\n11 - Номер зачетной книжки\n12 - Пол\n13 - Данные о сессиях\n";
+		"7 - Год поступления в институт\n8 - Факультет (институт)\n9 - Кафедра\n10 - Группа\n" << 
+		"11 - Номер зачетной книжки\n12 - Пол\n13 - Данные о сессиях\n\n0 - В главное меню\n";
 	do {
 		ConsoleInteraction::GetValue(param);
 		if (param < 0 || param > 13) cout << "Нужно ввести значение от 0 до 13\n";
 	} while (param < 0 || param > 13);
 
 	switch (param) {
+	case 0:
+		break;
 	case 1:
 		cout << "Введите новую фамилию студента\n";
 		ConsoleInteraction::GetValue(studentsList[studentId].Surname, 1);
@@ -168,25 +188,31 @@ void Handlers::EditStudentHandler() {
 		break;
 	case 13:
 		cout << "Укажите, что нужно изменить в сессиях\n";
-		cout << "1 - Добавить сессию\n2 - Изменить сессию\n";
+		cout << "1 - Добавить сессию\n2 - Изменить сессию\n\n0 - В главное меню\n";
 		do {
 			ConsoleInteraction::GetValue(sessionParam);
-			if (sessionParam != 1 && sessionParam != 2) cout << "Нужно ввести либо 1, либо 2\n";
+			if (sessionParam != 1 && sessionParam != 2) cout << "Нужно ввести число от 0 до 2\n";
 		} while (sessionParam != 1 && sessionParam != 2);
 		switch (sessionParam)
 		{
+		case 0:
+			break;
 		case 1:
 			if (studentsList[studentId].SessionCount == 9) {
 				cout << "Уже имеется максимальное количество сессий (9)\n";
 				break;
 			}
+
 			sessionNumber = studentsList[studentId].SessionCount++;
 			studentsList[studentId].StudentSession[sessionNumber].Semester = sessionNumber + 1;
-			cout << "Введите количество предметов в сессии (максимум 10)\n";
+
+			cout << "Введите количество предметов в сессии (максимум 10)\n\n0 - В главное меню\n";
 			ConsoleInteraction::GetValue(studentsList[studentId].StudentSession[sessionNumber].SubjectsCount);
+
 			for (int i = 0; i < studentsList[studentId].StudentSession[sessionNumber].SubjectsCount; i++) {
 				cout << "Введите название " << i + 1 << "-го предмета в сессии\n";
 				ConsoleInteraction::GetValue(studentsList[studentId].StudentSession[sessionNumber].Subjects[i].Name, 1);
+
 				cout << "Введите оценку за " << i + 1 << "-й предмет в сессии\n";
 				ConsoleInteraction::GetValue(studentsList[studentId].StudentSession[sessionNumber].Subjects[i].Mark);
 			}
@@ -195,7 +221,7 @@ void Handlers::EditStudentHandler() {
 			//TODO: draw sessions table
 			cout << "Введите номер сессии, данные которой нужно изменить\n";
 			ConsoleInteraction::GetValue(sessionEditNumber);
-			cout << "1 - Добавить предмет\n2 - Изменить данные об имеющемся предмете\n";
+			cout << "1 - Добавить предмет\n2 - Изменить данные об имеющемся предмете\n\n0 - В главное меню\n";
 			do { 
 				ConsoleInteraction::GetValue(subjectEditNumber);
 				if (subjectEditNumber != 1 && subjectEditNumber != 2) cout << "Нужно ввести либо 1, либо 2\n";
@@ -205,6 +231,8 @@ void Handlers::EditStudentHandler() {
 
 			switch (subjectEditNumber)
 			{
+			case 0:
+				break;
 			case 1:
 				if (prevSubjectsCount == 10) {
 					cout << "Уже имеется максимальное количество предметов в сессии (10)\n";
@@ -220,10 +248,12 @@ void Handlers::EditStudentHandler() {
 				//TODO: draw subjects table
 				cout << "Введите номер предмета, данные о котором нужно изменить\n";
 				ConsoleInteraction::GetValue(subjectEditNumber);
-				cout << "1 - Изменить название\n2 - Изменить оценку\n";
+				cout << "1 - Изменить название\n2 - Изменить оценку\n\n0 - В главное меню\n";
 				ConsoleInteraction::GetValue(subjectEditParam);
 				switch (subjectEditParam)
 				{
+				case 0:
+					break;
 				case 1:
 					cout << "Введите название предмета под номером " << subjectEditNumber << endl;
 					ConsoleInteraction::GetValue(studentsList[studentId].StudentSession[sessionEditNumber - 1].Subjects[subjectEditNumber - 1].Name, 1);
@@ -252,8 +282,10 @@ void Handlers::DeleteStudentHandler() {
 	for (int i = 0; i < students.size(); i++) {
 		cout << i + 1 << " - " << students[i].RecordBook << endl;
 	}
+	cout << "\n0 - В главное меню\n";
 	do {
 		ConsoleInteraction::GetValue(studentId);
+		if (!studentId) return;
 		if (studentId < 0 || studentId > students.size()) cout << "Нужно выбрать число от 1 до " << students.size() << endl;
 	} while (studentId < 0 || studentId > students.size());
 	FileInteraction::DeleteStudent(studentId - 1);
