@@ -7,7 +7,25 @@
 #include <string>
 #include "../ConsoleInteraction/ConsloleInteraction.h"
 
+void Handlers::DrawStudentsHandler() {
+
+	vector<Student> students = FileInteraction::ReadData();
+	vector<string> studentColumnNames = { "Фамилия", "Имя", "Отчество", "Дата рождения", "Год поступления",
+	  "Факультет", "Кафедра", "Группа", "Номер зачетной книжки", "Пол" };
+	vector<string> examColumnNames = { "Номер семестра", "Название предмета", "Оценка" };
+	vector<vector<string>> studentLines = Tools::StructToString(students);
+	vector<vector<string>> subjects;
+
+	for (int i = 0; i < studentLines.size(); i++) {
+		Table::DrawTable({ studentLines[i] }, studentColumnNames, "Студент " + to_string(i + 1));
+		Tools::StructToString(students[i], subjects);
+		Table::DrawTable(subjects, examColumnNames, "Сессии");
+		subjects = {};
+	}
+}
+
 void Handlers::AddStudentHandler() {
+
 	Student newStudent = {};
 
 	cout << "Введите фамилию студента\n";
@@ -64,16 +82,40 @@ void Handlers::AddStudentHandler() {
 	ConsoleInteraction::GetValue(newStudent.Surname);
 }
 
-void Handlers::EditStudentHandler(int studentId, vector<Student> studentsList, int param) {
-	vector<Student> students = FileInteraction::ReadData();
-
+void Handlers::EditStudentHandler() {
+	vector<Student> studentsList = FileInteraction::ReadData();
+	int studentId = -1;
+	int param;
 	int sessionParam;
 	int sessionNumber;
 	int prevSubjectsCount;
 	int sessionEditNumber;
 	int subjectEditNumber;
 	int subjectEditParam;
-	if (!param) return;
+
+	if (!studentsList.size()) {
+		cout << "В базе данных нет студентов\n";
+		return;
+	}
+	cout << "Введите номер студента, данные которого нужно изменить\n";
+	for (int i = 0; i < studentsList.size(); i++) {
+		cout << i + 1 << " - " << studentsList[i].RecordBook << endl;
+	}
+	do {
+		ConsoleInteraction::GetValue(studentId);
+
+		if (studentId < 0 || studentId > studentsList.size()) cout << "Нужно выбрать число от 1 до " << studentsList.size() << endl;
+	} while (studentId < 0 || studentId > studentsList.size());
+
+	studentId -= 1;
+
+	cout << "Введите номер изменяемого параметра\n" <<
+		"1 - Фамилия\n2 - Имя\n3 - Отчество\n4 - Число рождения\n5 - Месяц роэждения\n6 - Год рождения\n" <<
+		"7 - Год поступления в институт\n8 - Факультет (институт)\n9 - Кафедра\n10 - Группа\n11 - Номер зачетной книжки\n12 - Пол\n13 - Данные о сессиях\n";
+	do {
+		ConsoleInteraction::GetValue(param);
+		if (param < 0 || param > 13) cout << "Нужно ввести значение от 0 до 13\n";
+	} while (param < 0 || param > 13);
 
 	switch (param) {
 	case 1:
@@ -82,7 +124,7 @@ void Handlers::EditStudentHandler(int studentId, vector<Student> studentsList, i
 		break;
 	case 2:
 		cout << "Введите новое имя студента\n";
-		ConsoleInteraction::GetValue(studentsList[studentId].Name);
+		ConsoleInteraction::GetValue(studentsList[studentId].Name, 1);
 		break;
 	case 3:
 		cout << "Введите новое отчество студента\n";
@@ -106,23 +148,23 @@ void Handlers::EditStudentHandler(int studentId, vector<Student> studentsList, i
 		break;
 	case 8:
 		cout << "Введите факультет студента\n";
-		ConsoleInteraction::GetValue(studentsList[studentId].Institute);
+		ConsoleInteraction::GetValue(studentsList[studentId].Institute, 1);
 		break;
 	case 9:
 		cout << "Введите кафедру студента\n";
-		ConsoleInteraction::GetValue(studentsList[studentId].Department);
+		ConsoleInteraction::GetValue(studentsList[studentId].Department, 1);
 		break;
 	case 10:
 		cout << "Введите группу студента\n";
-		ConsoleInteraction::GetValue(studentsList[studentId].Group);
+		ConsoleInteraction::GetValue(studentsList[studentId].Group, 1);
 		break;
 	case 11:
 		cout << "Введите номер зачетной книжки студента\n";
-		ConsoleInteraction::GetValue(studentsList[studentId].RecordBook);
+		ConsoleInteraction::GetValue(studentsList[studentId].RecordBook, 1);
 		break;
 	case 12:
 		cout << "Введите пол студента (1 - мужчина, 0 - женщина)\n";
-		ConsoleInteraction::GetValue(studentsList[studentId].Institute);
+		ConsoleInteraction::GetValue(studentsList[studentId].Institute, 1);
 		break;
 	case 13:
 		cout << "Укажите, что нужно изменить в сессиях\n";

@@ -1,4 +1,5 @@
 struct Handlers {
 	static void AddStudentHandler();
-	static void EditStudentHandler(int studentId, vector<Student> studentsList, int param);
+	static void EditStudentHandler();
+	static void DrawStudentsHandler();
 };
