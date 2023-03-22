@@ -63,14 +63,15 @@ void ConsoleInteraction::Start() {
                 cout << "В базе данных нет студентов\n";
                 break;
             }
-            cout << "Введите номер зачетной книжки студента\n";
+            cout << "Введите номер студента, данные которого нужно изменить\n";
+            for (int i = 0; i < students.size(); i++) {
+                cout << i + 1 << " - " << students[i].RecordBook << endl;
+            }
             do {
-                //ConsoleInteraction::GetValue(recordBook, 1);
-                cin >> recordBook;
-                studentId = Tools::FindStudentByRecordBook(recordBook);
-                if (!studentId) cout << "Студента с таким номером зачетной книжки не найдено\n";
-            } while (!studentId);
-            cout << studentId - 1;
+                ConsoleInteraction::GetValue(studentId);
+                
+                if (studentId < 0 || studentId > students.size()) cout << "Нужно выбрать число от 1 до " << students.size() << endl;
+            } while (studentId < 0 || studentId > students.size());
             cout << "Введите номер изменяемого параметра\n" <<
                 "1 - Фамилия\n2 - Имя\n3 - Отчество\n4 - Число рождения\n5 - Месяц роэждения\n6 - Год рождения\n" <<
                 "7 - Год поступления в институт\n8 - Факультет (институт)\n9 - Кафедра\n10 - Группа\n11 - Номер зачетной книжки\n12 - Пол\n13 - Данные о сессиях\n";
@@ -84,8 +85,10 @@ void ConsoleInteraction::Start() {
             for (int i = 0; i < students.size(); i++) {
                 cout << i + 1 << " - " << students[i].RecordBook << endl;
             }
-
-            do { ConsoleInteraction::GetValue(param); } while (param < 0 || param > students.size());
+            do { 
+                ConsoleInteraction::GetValue(param); 
+                if (studentId < 0 || studentId > students.size()) cout << "Нужно выбрать число от 1 до " << students.size() << endl;
+            } while (param < 0 || param > students.size());
             FileInteraction::DeleteStudent(param - 1);
             break;
         }
