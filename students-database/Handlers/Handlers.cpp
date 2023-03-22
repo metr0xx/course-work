@@ -68,17 +68,15 @@ void Handlers::AddStudentHandler() {
 		ConsoleInteraction::GetValue(gender);
 		switch (gender) {
 
-		case (0, 1):
+		case 0: case 1:
 			newStudent.Gender = gender;
 			break;
 		case 2:
 			cout << "Гендера всего 2 :)\n";
 			break;
 		}
-	} while (gender == 2);
+	} while (gender > 1 || gender < 0);
 
-	
-	
 	cout << "Введите количество сданных сессий (максимум 9)\n";
 	ConsoleInteraction::GetValue(newStudent.SessionCount);
 
@@ -99,6 +97,7 @@ void Handlers::AddStudentHandler() {
 
 void Handlers::EditStudentHandler() {
 	vector<Student> studentsList = FileInteraction::ReadData();
+
 	int studentId = -1;
 	int param;
 	int sessionParam;
@@ -107,6 +106,7 @@ void Handlers::EditStudentHandler() {
 	int sessionEditNumber;
 	int subjectEditNumber;
 	int subjectEditParam;
+	int gender;
 
 	if (!studentsList.size()) {
 		cout << "В базе данных нет студентов\n";
@@ -183,8 +183,24 @@ void Handlers::EditStudentHandler() {
 		ConsoleInteraction::GetValue(studentsList[studentId].RecordBook, 1);
 		break;
 	case 12:
-		cout << "Введите пол студента (1 - мужчина, 0 - женщина)\n";
-		ConsoleInteraction::GetValue(studentsList[studentId].Institute, 1);
+		do {
+			cout << "Введите пол студента\n0 - женщина\n1 - мужчина\n2 - небинарная личность\n";
+
+			ConsoleInteraction::GetValue(gender);
+			cout << gender << endl;
+			switch (gender) {
+				cout << gender << endl;
+			case 0: case 1:
+				studentsList[studentId].Gender = gender;
+				cout << studentsList[studentId].Gender << endl << gender << endl;
+				break;
+			case 2:
+				cout << "Гендера всего 2 :)\n";
+				break;
+			} 
+		} while (gender > 1 || gender < 0);
+
+
 		break;
 	case 13:
 		cout << "Укажите, что нужно изменить в сессиях\n";
@@ -261,7 +277,8 @@ void Handlers::EditStudentHandler() {
 				case 2:
 					cout << "Введите оценку за предмет " << studentsList[studentId].StudentSession[sessionEditNumber - 1].Subjects[subjectEditNumber - 1].Name;
 					ConsoleInteraction::GetValue(studentsList[studentId].StudentSession[sessionEditNumber - 1].Subjects[subjectEditNumber - 1].Mark);
-					break;
+					cout << "end of adding";
+					return;
 				}
 				break;
 			}
