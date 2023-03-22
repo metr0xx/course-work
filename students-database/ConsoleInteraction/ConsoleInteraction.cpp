@@ -9,15 +9,13 @@
 using namespace std;
 
 void ConsoleInteraction::Start() {
+
     int command;
-    int param;
-    int studentId = -1;
-    char recordBook[10];
-    string value;
-    string message;
+
     while (true) {
         cout << "Доступные команды:\n1 - Показать список студентов\n2 - Добавить нового студента\n" <<
             "3 - Редактировать студента\n4 - Удалить студента\n";
+
         ConsoleInteraction::GetValue(command);
 
         switch (command) {
