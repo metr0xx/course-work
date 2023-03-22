@@ -243,3 +243,18 @@ void Handlers::EditStudentHandler() {
 	FileInteraction::EditStudent(studentsList);
 }
 
+void Handlers::DeleteStudentHandler() {
+	vector<Student> students = FileInteraction::ReadData();
+
+	int studentId;
+
+	cout << "¬ыберете номер студента, которого нужно удалить\n";
+	for (int i = 0; i < students.size(); i++) {
+		cout << i + 1 << " - " << students[i].RecordBook << endl;
+	}
+	do {
+		ConsoleInteraction::GetValue(studentId);
+		if (studentId < 0 || studentId > students.size()) cout << "Ќужно выбрать число от 1 до " << students.size() << endl;
+	} while (studentId < 0 || studentId > students.size());
+	FileInteraction::DeleteStudent(studentId - 1);
+}
