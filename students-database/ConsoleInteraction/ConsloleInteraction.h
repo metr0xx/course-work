@@ -8,16 +8,17 @@ struct ConsoleInteraction {
 
 	template<typename T>
 	static void GetValue(T& value) {
-		while (!(cin >> value))
+		while (!(cin >> value) || (cin.peek() != '\n'))
 		{
 			cin.clear();
-			cin.ignore(1000, '\n');
-			cout << "Неверное значение перематра\n";
+			while (cin.get() != '\n');
+;			cout << "Неверное значение перематра\n";
 		}
 	}
 
 	static void ConsoleInteraction::GetValue(char value[], bool afterInt) {
 		char inputValue[100];
+
 		if (afterInt) {
 			getchar();
 		}
