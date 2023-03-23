@@ -14,7 +14,7 @@ void ConsoleInteraction::Start() {
 
     while (true) {
         cout << "Доступные команды:\n1 - Показать список студентов\n2 - Добавить нового студента\n" <<
-            "3 - Редактировать студента\n4 - Удалить студента\n";
+            "3 - Редактировать студента\n4 - Удалить студента\n5 - Дополнительное задание (вариант 53)\n";
 
         ConsoleInteraction::GetValue(command);
 
@@ -31,6 +31,8 @@ void ConsoleInteraction::Start() {
         case 4:
             Handlers::DeleteStudentHandler();
             break;
+        case 5:
+            Handlers::SortStudentsHandler();
         }
 	}
 }
