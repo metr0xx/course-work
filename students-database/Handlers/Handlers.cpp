@@ -7,9 +7,8 @@
 #include <string>
 #include "../ConsoleInteraction/ConsloleInteraction.h"
 
-void Handlers::DrawStudentsHandler() {
+void Handlers::DrawStudentsHandler(vector<Student> students) {
 
-	vector<Student> students = FileInteraction::ReadData();
 	vector<string> studentColumnNames = { "Фамилия", "Имя", "Отчество", "Дата рождения", "Год поступления",
 	  "Факультет", "Кафедра", "Группа", "Номер зачетной книжки", "Пол" };
 	vector<string> examColumnNames = { "Номер семестра", "Название предмета", "Оценка" };
@@ -95,6 +94,7 @@ void Handlers::AddStudentHandler() {
 }
 
 void Handlers::EditStudentHandler() {
+
 	vector<Student> studentsList = FileInteraction::ReadData();
 
 	int studentId = -1;
@@ -102,10 +102,13 @@ void Handlers::EditStudentHandler() {
 	int sessionParam;
 	int sessionNumber;
 	int prevSubjectsCount;
+	int newSubjectsCount;
+	int newSessionsCount;
 	int sessionEditNumber;
 	int subjectEditNumber;
 	int subjectEditParam;
 	int gender;
+	int prevSessionsCount;
 
 	if (!studentsList.size()) {
 		cout << "В базе данных нет студентов\n";
@@ -213,30 +216,37 @@ void Handlers::EditStudentHandler() {
 		case 0:
 			break;
 		case 1:
-			if (studentsList[studentId].SessionCount == 9) {
-				cout << "Уже имеется максимальное количество сессий (9)\n";
-				break;
-			}
+			prevSessionsCount = studentsList[studentId].SessionCount;
+			do {
+				cout << "Введите количество новых сессий (максимум: " << 9 - prevSessionsCount << ")\n";
+				ConsoleInteraction::GetValue(newSessionsCount);
+			} while (prevSessionsCount + newSessionsCount > 9);
 
-			sessionNumber = studentsList[studentId].SessionCount++;
-			studentsList[studentId].StudentSession[sessionNumber].Semester = sessionNumber + 1;
+			for (int i = 0; i < newSessionsCount; i++) {
 
-			cout << "Введите количество предметов в сессии (максимум 10)\n\n0 - В главное меню\n";
-			ConsoleInteraction::GetValue(studentsList[studentId].StudentSession[sessionNumber].SubjectsCount);
+				sessionNumber = studentsList[studentId].SessionCount++;
+				studentsList[studentId].StudentSession[sessionNumber].Semester = sessionNumber + 1;
 
-			for (int i = 0; i < studentsList[studentId].StudentSession[sessionNumber].SubjectsCount; i++) {
-				cout << "Введите название " << i + 1 << "-го предмета в сессии\n";
-				ConsoleInteraction::GetValue(studentsList[studentId].StudentSession[sessionNumber].Subjects[i].Name, 1);
+				do {
+					cout << "Введите количество предметов в сессии (максимум 10)\n\n0 - В главное меню\n";
+					ConsoleInteraction::GetValue(studentsList[studentId].StudentSession[sessionNumber].SubjectsCount);
+				} while (studentsList[studentId].StudentSession[sessionNumber].SubjectsCount > 10 ||
+					studentsList[studentId].StudentSession[sessionNumber].SubjectsCount < 0);
 
-				cout << "Введите оценку за " << i + 1 << "-й предмет в сессии\n";
-				ConsoleInteraction::GetValue(studentsList[studentId].StudentSession[sessionNumber].Subjects[i].Mark);
+				for (int i = 0; i < studentsList[studentId].StudentSession[sessionNumber].SubjectsCount; i++) {
+					cout << "Введите название " << i + 1 << "-го предмета в сессии\n";
+					ConsoleInteraction::GetValue(studentsList[studentId].StudentSession[sessionNumber].Subjects[i].Name, 1);
+
+					cout << "Введите оценку за " << i + 1 << "-й предмет в сессии\n";
+					ConsoleInteraction::GetValue(studentsList[studentId].StudentSession[sessionNumber].Subjects[i].Mark);
+				}
 			}
 			break;
 		case 2:
 			//TODO: draw sessions table
 			cout << "Введите номер сессии, данные которой нужно изменить\n";
 			ConsoleInteraction::GetValue(sessionEditNumber);
-			cout << "1 - Добавить предмет\n2 - Изменить данные об имеющемся предмете\n\n0 - В главное меню\n";
+			cout << "1 - Добавить предмет(ы)\n2 - Изменить данные об имеющемся предмете\n\n0 - В главное меню\n";
 			do { 
 				ConsoleInteraction::GetValue(subjectEditNumber);
 				if (subjectEditNumber != 1 && subjectEditNumber != 2) cout << "Нужно ввести либо 1, либо 2\n";
@@ -249,15 +259,19 @@ void Handlers::EditStudentHandler() {
 			case 0:
 				break;
 			case 1:
-				if (prevSubjectsCount == 10) {
-					cout << "Уже имеется максимальное количество предметов в сессии (10)\n";
-					break;
+				do {
+					cout << "Введите количество новых предметов (максимум: " << 10 - prevSubjectsCount << ")\n";
+					ConsoleInteraction::GetValue(newSubjectsCount);
+				} while (prevSubjectsCount + newSubjectsCount > 10);
+
+				for (int i = 0; i < newSubjectsCount; i++) {
+					cout << "Введите название предмена\n";
+					ConsoleInteraction::GetValue(studentsList[studentId].StudentSession[sessionEditNumber - 1].Subjects[prevSubjectsCount + i].Name, 1);
+					cout << "Введите оценку за предмет\n";
+					ConsoleInteraction::GetValue(studentsList[studentId].StudentSession[sessionEditNumber - 1].Subjects[prevSubjectsCount + i].Mark);
+					studentsList[studentId].StudentSession[sessionEditNumber - 1].SubjectsCount++;
 				}
-				cout << "Введите название предмена\n";
-				ConsoleInteraction::GetValue(studentsList[studentId].StudentSession[sessionEditNumber - 1].Subjects[prevSubjectsCount].Name, 1);
-				cout << "Введите оценку за предмет\n";
-				ConsoleInteraction::GetValue(studentsList[studentId].StudentSession[sessionEditNumber - 1].Subjects[prevSubjectsCount].Mark);
-				studentsList[studentId].StudentSession[sessionEditNumber - 1].SubjectsCount++;
+				
 				break;
 			case 2:
 				//TODO: draw subjects table
@@ -289,6 +303,7 @@ void Handlers::EditStudentHandler() {
 }
 
 void Handlers::DeleteStudentHandler() {
+
 	vector<Student> students = FileInteraction::ReadData();
 
 	int studentId;
@@ -321,9 +336,14 @@ void Handlers::SortStudentsHandler() {
 	
 	Student::SortByGenderAndMarks(gender, students, perfectStudents, goodStudents);
 	
-	//TODO: draw student tables
+	cout << "\nСтуденты с оценками 3, 4 и 5:\n";
+	Handlers::DrawStudentsHandler(goodStudents);
 
-	for (auto ex : perfectStudents) cout << ex.Surname << endl;
-	cout << endl;
-	for (auto gd : goodStudents) cout << gd.Surname << endl;
+	if (perfectStudents.size()) {
+		cout << "\nСтуденты с оценками 4 и 5:\n";
+		Handlers::DrawStudentsHandler(perfectStudents);
+		return;
+	}
+
+	cout << "Студентов с оценками 4 и 5 нет\n";
 }

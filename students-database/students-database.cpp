@@ -10,10 +10,10 @@ int main()
 	SetConsoleCP(1251);
 	SetConsoleOutputCP(1251);
 
-	HWND hWindowConsole = GetConsoleWindow();
+	/*HWND hWindowConsole = GetConsoleWindow();
 	RECT r;
 	GetWindowRect(hWindowConsole, &r); 
-	MoveWindow(hWindowConsole, r.left, r.top, 1200, 700, TRUE);
+	MoveWindow(hWindowConsole, r.left, r.top, 1200, 700, TRUE);*/
 
 	ConsoleInteraction::Start();
 }
