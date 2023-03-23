@@ -7,7 +7,8 @@
 
 using namespace std;
 
-struct Student {
+class Student {
+public:
 	char Surname[100];
 	char Name[100];
 	char Patronymic[100];
@@ -20,4 +21,9 @@ struct Student {
 	bool Gender;
 	Session StudentSession[9];
 	int SessionCount;
+
+	static void SortByGenderAndMarks(bool gender, vector<Student> students, vector<Student>& perfectStudents, vector<Student>& goodStudents);
+
+private:
+	static void sortStudentsByAlphabet(vector<Student>& students);
 };
