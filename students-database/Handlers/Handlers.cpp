@@ -92,7 +92,6 @@ void Handlers::AddStudentHandler() {
 		}
 	}
 	FileInteraction::AddStudent({ newStudent });
-	ConsoleInteraction::GetValue(newStudent.Surname);
 }
 
 void Handlers::EditStudentHandler() {
@@ -262,7 +261,7 @@ void Handlers::EditStudentHandler() {
 				break;
 			case 2:
 				//TODO: draw subjects table
-				cout << "Введите номер предмета, данные о котором нужно изменить\n";
+				cout << "Введите номер предмета, данные которого нужно изменить\n";
 				ConsoleInteraction::GetValue(subjectEditNumber);
 				cout << "1 - Изменить название\n2 - Изменить оценку\n\n0 - В главное меню\n";
 				ConsoleInteraction::GetValue(subjectEditParam);
@@ -275,10 +274,9 @@ void Handlers::EditStudentHandler() {
 					ConsoleInteraction::GetValue(studentsList[studentId].StudentSession[sessionEditNumber - 1].Subjects[subjectEditNumber - 1].Name, 1);
 					break;
 				case 2:
-					cout << "Введите оценку за предмет " << studentsList[studentId].StudentSession[sessionEditNumber - 1].Subjects[subjectEditNumber - 1].Name;
+					cout << "Введите оценку за предмет " << studentsList[studentId].StudentSession[sessionEditNumber - 1].Subjects[subjectEditNumber - 1].Name << endl;
 					ConsoleInteraction::GetValue(studentsList[studentId].StudentSession[sessionEditNumber - 1].Subjects[subjectEditNumber - 1].Mark);
-					cout << "end of adding";
-					return;
+					break;
 				}
 				break;
 			}
@@ -306,4 +304,26 @@ void Handlers::DeleteStudentHandler() {
 		if (studentId < 0 || studentId > students.size()) cout << "Нужно выбрать число от 1 до " << students.size() << endl;
 	} while (studentId < 0 || studentId > students.size());
 	FileInteraction::DeleteStudent(studentId - 1);
+}
+
+void Handlers::SortStudentsHandler() {
+	bool gender;
+
+	vector<Student> students = FileInteraction::ReadData();
+	vector<Student> goodStudents;
+	vector<Student> perfectStudents;
+
+	cout << "Введите пол студента\n0 - Женщина\n1 - Мужчина\n";
+	do {
+		ConsoleInteraction::GetValue(gender);
+		if (gender < 0 || gender > 1) cout << "Нужно ввести либо 0, либо 1\n";
+	} while (gender < 0 || gender > 1);
+	
+	Student::SortByGenderAndMarks(gender, students, perfectStudents, goodStudents);
+	
+	//TODO: draw student tables
+
+	for (auto ex : perfectStudents) cout << ex.Surname << endl;
+	cout << endl;
+	for (auto gd : goodStudents) cout << gd.Surname << endl;
 }
