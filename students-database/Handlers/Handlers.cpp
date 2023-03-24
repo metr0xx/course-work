@@ -4,11 +4,29 @@
 #include "../Tools/Tools.h"
 #include "../Models/Student.h"
 #include "Handlers.h"
+#include "../Models/Student.h"
 #include <string>
 #include "../ConsoleInteraction/ConsloleInteraction.h"
+#include <Windows.h>
 
 void Handlers::DrawStudentsHandler(vector<Student> students) {
 
+	HCRYPTPROV hProv;
+	HCRYPTKEY hSessionKey;
+
+	CryptAcquireContext(&hProv, NULL, NULL, PROV_RSA_FULL, CRYPT_VERIFYCONTEXT);
+
+	CryptGenKey(hProv, CALG_RC4, CRYPT_EXPORTABLE, &hSessionKey);
+	
+	char str[] = "TestTest";
+
+	DWORD count = strlen(str);
+
+	CryptEncrypt(hSessionKey, 0, true, 0, (BYTE*)str, &count, strlen(str));
+	cout << str << endl;
+
+	CryptDecrypt(hSessionKey, 0, true, 0, (BYTE*)str, &count);
+	cout << str;
 	vector<string> studentColumnNames = { "Фамилия", "Имя", "Отчество", "Дата рождения", "Год поступления",
 	  "Факультет", "Кафедра", "Группа", "Номер зачетной книжки", "Пол" };
 	vector<string> examColumnNames = { "Номер семестра", "Название предмета", "Оценка" };
@@ -105,7 +123,7 @@ void Handlers::EditStudentHandler() {
 	int newSubjectsCount;
 	int newSessionsCount;
 	int sessionEditNumber = 1;
-	int subjectEditNumber;
+	int subjectEditNumber = 1;
 	int subjectEditParam;
 	int gender;
 	int prevSessionsCount;
@@ -253,13 +271,13 @@ void Handlers::EditStudentHandler() {
 			}
 			cout << "1 - Добавить предмет(ы)\n2 - Изменить данные об имеющемся предмете\n\n0 - В главное меню\n";
 			do { 
-				ConsoleInteraction::GetValue(subjectEditNumber);
-				if (subjectEditNumber != 1 && subjectEditNumber != 2) cout << "Нужно ввести либо 1, либо 2\n";
-			} while (subjectEditNumber != 1 && subjectEditNumber != 2);
+				ConsoleInteraction::GetValue(subjectEditParam);
+				if (subjectEditParam != 1 && subjectEditParam != 2) cout << "Нужно ввести либо 1, либо 2\n";
+			} while (subjectEditParam != 1 && subjectEditParam != 2);
 
 			prevSubjectsCount = studentsList[studentId].StudentSession[sessionEditNumber - 1].SubjectsCount;
 
-			switch (subjectEditNumber)
+			switch (subjectEditParam)
 			{
 			case 0:
 				break;
