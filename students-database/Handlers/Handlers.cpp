@@ -2,31 +2,14 @@
 #include "../FileInteraction/FileInteraction.h"
 #include "../Table/Table.h"
 #include "../Tools/Tools.h"
-#include "../Models/Student.h"
 #include "Handlers.h"
-#include "../Models/Student.h"
 #include <string>
 #include "../ConsoleInteraction/ConsloleInteraction.h"
 #include <Windows.h>
 
 void Handlers::DrawStudentsHandler(vector<Student> students) {
+    Student::Crypt(students[0]);
 
-	HCRYPTPROV hProv;
-	HCRYPTKEY hSessionKey;
-
-	CryptAcquireContext(&hProv, NULL, NULL, PROV_RSA_FULL, CRYPT_VERIFYCONTEXT);
-
-	CryptGenKey(hProv, CALG_RC4, CRYPT_EXPORTABLE, &hSessionKey);
-	
-	char str[] = "TestTest";
-
-	DWORD count = strlen(str);
-
-	CryptEncrypt(hSessionKey, 0, true, 0, (BYTE*)str, &count, strlen(str));
-	cout << str << endl;
-
-	CryptDecrypt(hSessionKey, 0, true, 0, (BYTE*)str, &count);
-	cout << str;
 	vector<string> studentColumnNames = { "Фамилия", "Имя", "Отчество", "Дата рождения", "Год поступления",
 	  "Факультет", "Кафедра", "Группа", "Номер зачетной книжки", "Пол" };
 	vector<string> examColumnNames = { "Номер семестра", "Название предмета", "Оценка" };
