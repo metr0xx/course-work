@@ -2,6 +2,7 @@
 #include "Table.h"
 #include <vector>
 #include <string>
+#include <windows.h>
 #include <numeric>
 
 using namespace std;
@@ -48,6 +49,15 @@ void Table::DrawTable(vector<vector<string>> lines, vector<string> columns, stri
     }
 
     int tableWidth = accumulate(params.begin(), params.end(), 0);
+
+    HWND hWindowConsole = GetConsoleWindow();
+    RECT r;
+    GetWindowRect(hWindowConsole, &r);
+   
+    if (r.right - r.left < tableWidth * 9) {
+        MoveWindow(hWindowConsole, r.left, r.top, tableWidth * 9, 700, TRUE);
+    }
+
     drawBorder(tableWidth);
     if (title.length()) {
         formatColumn(title, title.length(), tableWidth, true);
