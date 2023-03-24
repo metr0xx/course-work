@@ -104,7 +104,7 @@ void Handlers::EditStudentHandler() {
 	int prevSubjectsCount;
 	int newSubjectsCount;
 	int newSessionsCount;
-	int sessionEditNumber;
+	int sessionEditNumber = 1;
 	int subjectEditNumber;
 	int subjectEditParam;
 	int gender;
@@ -211,12 +211,14 @@ void Handlers::EditStudentHandler() {
 			ConsoleInteraction::GetValue(sessionParam);
 			if (sessionParam != 1 && sessionParam != 2) cout << "Нужно ввести число от 0 до 2\n";
 		} while (sessionParam != 1 && sessionParam != 2);
+
+		prevSessionsCount = studentsList[studentId].SessionCount;
+
 		switch (sessionParam)
 		{
 		case 0:
 			break;
 		case 1:
-			prevSessionsCount = studentsList[studentId].SessionCount;
 			do {
 				cout << "Введите количество новых сессий (максимум: " << 9 - prevSessionsCount << ")\n";
 				ConsoleInteraction::GetValue(newSessionsCount);
@@ -243,9 +245,12 @@ void Handlers::EditStudentHandler() {
 			}
 			break;
 		case 2:
-			//TODO: draw sessions table
-			cout << "Введите номер сессии, данные которой нужно изменить\n";
-			ConsoleInteraction::GetValue(sessionEditNumber);
+			if (prevSessionsCount > 1) {
+				do {
+					cout << "Введите номер сессии, данные которой нужно изменить (от 1 до " << prevSessionsCount << ")\n";
+					ConsoleInteraction::GetValue(sessionEditNumber);
+			} while (sessionEditNumber > prevSessionsCount || sessionEditNumber <= 0);
+			}
 			cout << "1 - Добавить предмет(ы)\n2 - Изменить данные об имеющемся предмете\n\n0 - В главное меню\n";
 			do { 
 				ConsoleInteraction::GetValue(subjectEditNumber);
@@ -275,8 +280,13 @@ void Handlers::EditStudentHandler() {
 				break;
 			case 2:
 				//TODO: draw subjects table
-				cout << "Введите номер предмета, данные которого нужно изменить\n";
-				ConsoleInteraction::GetValue(subjectEditNumber);
+				if (prevSubjectsCount > 1) {
+					do {
+						cout << "Введите номер предмета, данные которого нужно изменить\n";
+						ConsoleInteraction::GetValue(subjectEditNumber);
+					} while (subjectEditNumber > prevSubjectsCount || subjectEditNumber < 0);
+				}
+				
 				cout << "1 - Изменить название\n2 - Изменить оценку\n\n0 - В главное меню\n";
 				ConsoleInteraction::GetValue(subjectEditParam);
 				switch (subjectEditParam)
