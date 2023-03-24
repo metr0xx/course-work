@@ -22,7 +22,9 @@ public:
 	Session StudentSession[9];
 	int SessionCount;
 
-	static void SortByGenderAndMarks(bool gender, vector<Student> students, vector<Student>& perfectStudents, vector<Student>& goodStudents);
+    static void Crypt(Student & student);
+    static void Decrypt(Student & student);
+	static void SortByGenderAndMarks(bool gender, const vector<Student>& students, vector<Student>& perfectStudents, vector<Student>& goodStudents);
 
 private:
 	static void sortStudentsByAlphabet(vector<Student>& students);
