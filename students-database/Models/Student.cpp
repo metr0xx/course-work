@@ -42,16 +42,3 @@ void Student::SortByGenderAndMarks(bool gender, const vector<Student>& students,
 	Student::sortStudentsByAlphabet(goodStudents);
 }
 
-void Student::Crypt(Student & student) {
-    HCRYPTPROV hProv;
-    HCRYPTKEY hSessionKey;
-    DWORD count;
-    cout << student.Surname << endl;
-    CryptAcquireContext(&hProv, nullptr, nullptr, PROV_RSA_FULL, CRYPT_VERIFYCONTEXT);
-    CryptGenKey(hProv, CALG_RC4, CRYPT_EXPORTABLE, &hSessionKey);
-
-     count = strlen(student.Surname);
-    CryptEncrypt(hSessionKey, 0, true, 0, (BYTE*)student.Surname, &count, strlen(student.Surname));
-
-    cout << student.Surname;
-}

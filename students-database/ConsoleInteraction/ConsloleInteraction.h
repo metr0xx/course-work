@@ -17,17 +17,18 @@ struct ConsoleInteraction {
 		}
 	}
 
-	static void ConsoleInteraction::GetValue(char value[], bool afterInt) {
-		char inputValue[100];
+    static void GetValue(char value[], bool afterInt = false) {
+        char inputValue[100];
 
-		if (afterInt) {
-			getchar();
-		}
+        if (afterInt) {
+            getchar();
+        }
 
-		while (!gets_s(inputValue)) {
-			cout << "Неверное строковое значение\n";
-		}
+        while (!gets_s(inputValue, 100)) {
+            cout << "Неверное строковое значение\n";
+        }
 
-		strcpy(value, inputValue);
-	}
+        strcpy(value, inputValue);
+    }
+
 };

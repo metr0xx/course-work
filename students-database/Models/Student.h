@@ -2,6 +2,7 @@
 #include "Session.h"
 #include <vector>
 #include <string>
+#include <windows.h>
 
 #pragma once
 
@@ -21,9 +22,9 @@ public:
 	bool Gender;
 	Session StudentSession[9];
 	int SessionCount;
+    HCRYPTKEY SessionKey;
 
-    static void Crypt(Student & student);
-    static void Decrypt(Student & student);
+
 	static void SortByGenderAndMarks(bool gender, const vector<Student>& students, vector<Student>& perfectStudents, vector<Student>& goodStudents);
 
 private:
