@@ -7,14 +7,15 @@ struct ConsoleInteraction {
 
 	static void Start();
 
-	template<typename T>
-	static void GetValue(T& value) {
+	template<typename K>
+	static K GetValue(K& value) {
 		while (!(cin >> value) || (cin.peek() != '\n'))
 		{
 			cin.clear();
 			while (cin.get() != '\n');
 ;			cout << "Неверное значение перематра\n";
 		}
+        return value;
 	}
 
     static void GetValue(char value[], bool afterInt = false) {

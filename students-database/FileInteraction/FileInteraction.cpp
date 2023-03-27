@@ -1,27 +1,29 @@
 #include "FileInteraction.h"
 #include "../Models/Student.h"
 #include <iostream>
-#include <vector>
 #include <string>
 #include <fstream>
+#include "../Tools/List.cpp"
 
 using namespace std;
 
-const char* PATH = "C:/StudentsDB/DB.bin";
+//const char* PATH = "C:/StudentsDB/DB.bin";
+const char* PATH = "C:/StudentsDB/NEWDB.bin";
 
-vector<Student> FileInteraction::ReadData() {
+List<Student> FileInteraction::ReadData() {
 	ifstream file(PATH, ios::binary);
-	vector<Student> students;
-	Student student;
-	for (int i = 0; 
-		file.read((char*)&student, sizeof(student)); i++) {
-		students.push_back(student);
+    Student student;
+
+    List<Student> students;
+
+	for (int i = 0; file.read((char*)&student, sizeof(student)); i++) {
+		students.add(student);
 	}
 	file.close();
 	return students;
 }
 
-void FileInteraction::AddStudent(vector <Student> students) {
+void FileInteraction::AddStudent(List <Student> students) {
 	ofstream file(PATH, ios::binary | ios::app);
 	for (auto &student : students) {
 		file.write((char*)&student, sizeof(student));
@@ -29,14 +31,14 @@ void FileInteraction::AddStudent(vector <Student> students) {
 	file.close();
 }
 
-void FileInteraction::EditStudent(vector <Student> students) {
+void FileInteraction::EditStudent(List <Student> students) {
 	remove(PATH);
 	FileInteraction::AddStudent(students);
  }
 
 void FileInteraction::DeleteStudent(int studentId) {
-	vector<Student> students = FileInteraction::ReadData();
-	students.erase(students.begin() + studentId);
+    List<Student> students = FileInteraction::ReadData();
+	students.remove(studentId);
 	remove(PATH);
 	FileInteraction::AddStudent(students);
 }

@@ -3,12 +3,13 @@
 #include "../Models/Date.h"
 #include "../Models/Student.h"
 #include "../Models/Session.h"
+#include "../Tools/List.cpp"
 
 using namespace std;
 
 struct Tools {
 	static int FindStudentByRecordBook(char recordBook[]);
 	static string DateToString(Date date);
-	static vector<vector<string>> StructToString(vector<Student> students);
-	static void StructToString(Student& student, vector<vector<string>>& subjects);
+	static List<List<string>> StructToString(List<Student> students);
+	static List<List<string>> StructToString(Student& student);
 };

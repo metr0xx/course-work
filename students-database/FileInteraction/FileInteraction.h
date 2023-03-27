@@ -1,11 +1,11 @@
 #include "../Models/Student.h"
-#include <vector>
+#include "../Tools/List.cpp"
 #include <string>
 using namespace std;
 
 struct FileInteraction {
-	static vector<Student> ReadData();
-	static void AddStudent(vector <Student> students);
-	static void EditStudent(vector <Student> students);
+	static List<Student> ReadData();
+	static void AddStudent(List <Student> students);
+	static void EditStudent(List <Student> students);
 	static void DeleteStudent(int studentId);
 };

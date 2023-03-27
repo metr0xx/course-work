@@ -1,6 +1,6 @@
 #include "Date.h"
 #include "Session.h"
-#include <vector>
+#include "../Tools/List.cpp"
 #include <string>
 #include <windows.h>
 
@@ -22,11 +22,89 @@ public:
 	bool Gender;
 	Session StudentSession[9];
 	int SessionCount;
-    HCRYPTKEY SessionKey;
 
+    char* GetSurname() {
+        return this->Surname;
+    }
 
-	static void SortByGenderAndMarks(bool gender, const vector<Student>& students, vector<Student>& perfectStudents, vector<Student>& goodStudents);
+    void SetSurname(char* surname) {
+        strcpy_s(this->Surname, surname);
+    }
+
+    char* GetName() {
+        return this->Name;
+    }
+
+    void SetName(char* name) {
+        strcpy_s(this->Name, name);
+    }
+
+    char* GetPatronymic() {
+        return this->Patronymic;
+    }
+
+    void SetPatronymic(char* patronymic) {
+        strcpy_s(this->Patronymic, patronymic);
+    }
+
+    unsigned short int GetAdmissionYear() {
+        return this->AdmissionYear;
+    }
+
+    void SetAdmissionYear(int admissionYear) {
+        this->AdmissionYear = admissionYear;
+    }
+
+    char* GetInstitute() {
+        return this->Institute;
+    }
+
+    void SetInstitute(char* institute) {
+        strcpy_s(this->Institute, institute);
+    }
+
+    char* GetDepartment() {
+        return this->Department;
+    }
+
+    void SetDepartment(char* department) {
+        strcpy_s(this->Department, department);
+    }
+
+    char* GetGroup() {
+        return this->Group;
+    }
+
+    void SetGroup(char* group) {
+        strcpy_s(this->Group, group);
+    }
+
+    char* GetRecordBook() {
+        return this->RecordBook;
+    }
+
+    void SetRecordBook(char* recordBook) {
+        strcpy_s(this->RecordBook, recordBook);
+    }
+
+    bool GetGender() {
+        return this->Gender;
+    }
+
+    void SetGender(bool gender) {
+        this->Gender = gender;
+    }
+
+    int GetSessionCount() {
+        return this->SessionCount;
+    }
+
+    void SetSessionCount(int sessionCount) {
+        this->SessionCount = sessionCount;
+    }
+
+	static void SortByGenderAndMarks(bool gender, const List<Student>& students, List<Student>& perfectStudents, List<Student>& goodStudents);
 
 private:
-	static void sortStudentsByAlphabet(vector<Student>& students);
+	static void sortStudentsByAlphabet(List<Student>& students);
 };
