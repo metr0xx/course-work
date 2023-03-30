@@ -4,13 +4,14 @@
 #include "../Tools/Tools.h"
 #include "../Tools/List.cpp"
 #include "Handlers.h"
-#include <string>
 #include "../ConsoleInteraction/ConsloleInteraction.h"
 
+#define string List<char>
+
 void Handlers::DrawStudentsHandler(List<Student> students) {
-	List<string> studentColumnNames = { "Фамилия", "Имя", "Отчество", "Дата рождения", "Год поступления",
-	  "Факультет", "Кафедра", "Группа", "Номер зачетной книжки", "Пол" };
+	List<string> studentColumnNames = { "Фамилия", "Имя", "Отчество", "Дата рождения", "Год поступления","Факультет", "Кафедра", "Группа", "Номер зачетной книжки", "Пол" };
     List<string> examColumnNames = { "Номер семестра", "Название предмета", "Оценка" };
+//
     List<List<string>> studentLines = Tools::StructToString(students);
     List<List<string>> subjects;
 
@@ -18,7 +19,6 @@ void Handlers::DrawStudentsHandler(List<Student> students) {
 		Table::DrawTable({ studentLines[i] }, studentColumnNames, "Студент " + to_string(i + 1));
 		subjects = Tools::StructToString(students[i]);
 		Table::DrawTable(subjects, examColumnNames, "Сессии");
-		subjects = {};
 	}
 }
 
@@ -90,9 +90,8 @@ void Handlers::AddStudentHandler() {
 	FileInteraction::AddStudent({ newStudent });
 }
 
-template<typename T>
 void Handlers::EditStudentHandler() {
-    T value;
+    int value;
 
     List<Student> studentsList = FileInteraction::ReadData();
 
@@ -129,7 +128,7 @@ void Handlers::EditStudentHandler() {
 
 	cout << "Введите номер изменяемого параметра\n" <<
 		"1 - Фамилия\n2 - Имя\n3 - Отчество\n4 - Число рождения\n5 - Месяц роэждения\n6 - Год рождения\n" <<
-		"7 - Год поступления в институт\n8 - Факультет (институт)\n9 - Кафедра\n10 - Группа\n" << 
+		"7 - Год поступления в институт\n8 - Факультет (институт)\n9 - Кафедра\n10 - Группа\n" <<
 		"11 - Номер зачетной книжки\n12 - Пол\n13 - Данные о сессиях\n\n0 - В главное меню\n";
 	do {
 		ConsoleInteraction::GetValue(param);
@@ -198,7 +197,7 @@ void Handlers::EditStudentHandler() {
 			case 2:
 				cout << "Гендера всего 2 :)\n";
 				break;
-			} 
+			}
 		} while (gender > 1 || gender < 0);
 
 
@@ -252,7 +251,7 @@ void Handlers::EditStudentHandler() {
 			} while (sessionEditNumber > prevSessionsCount || sessionEditNumber <= 0);
 			}
 			cout << "1 - Добавить предмет(ы)\n2 - Изменить данные об имеющемся предмете\n\n0 - В главное меню\n";
-			do { 
+			do {
 				ConsoleInteraction::GetValue(subjectEditParam);
 				if (subjectEditParam != 1 && subjectEditParam != 2) cout << "Нужно ввести либо 1, либо 2\n";
 			} while (subjectEditParam != 1 && subjectEditParam != 2);
@@ -276,7 +275,7 @@ void Handlers::EditStudentHandler() {
                     studentsList[studentId].StudentSession[sessionEditNumber - 1].Subjects[prevSubjectsCount + i].SetMark(ConsoleInteraction::GetValue(value));
 					studentsList[studentId].StudentSession[sessionEditNumber - 1].SetSubjectsCount(studentsList[studentId].StudentSession[sessionEditNumber - 1].GetSubjectsCount() + 1);
 				}
-				
+
 				break;
 			case 2:
 				//TODO: draw subjects table
@@ -286,7 +285,7 @@ void Handlers::EditStudentHandler() {
 						ConsoleInteraction::GetValue(subjectEditNumber);
 					} while (subjectEditNumber > prevSubjectsCount || subjectEditNumber < 0);
 				}
-				
+
 				cout << "1 - Изменить название\n2 - Изменить оценку\n\n0 - В главное меню\n";
 				ConsoleInteraction::GetValue(subjectEditParam);
 				switch (subjectEditParam)

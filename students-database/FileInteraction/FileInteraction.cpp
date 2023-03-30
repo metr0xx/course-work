@@ -1,7 +1,6 @@
 #include "FileInteraction.h"
 #include "../Models/Student.h"
 #include <iostream>
-#include <string>
 #include <fstream>
 #include "../Tools/List.cpp"
 

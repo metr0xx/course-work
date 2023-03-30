@@ -1,8 +1,10 @@
 #include <iostream>
 #include "Table.h"
-#include <string>
+#include "../Tools/List.cpp"
 #include <windows.h>
 #include <numeric>
+
+#define string List<char>
 
 using namespace std;
 
@@ -14,8 +16,9 @@ void Table::drawBorder(int tableWidth) {
 }
 
 void Table::formatColumn(string str, int maxLen, int tableWidth, bool header) {
-    cout << "| " << str;
-    header ? cout.width(tableWidth - str.length() - 2) : cout.width(maxLen - str.length() - 2);
+    cout << "| ";
+    str.print();
+    header ? cout.width(tableWidth - str.size() - 2) : cout.width(maxLen - str.size() - 2);
     cout.fill(' ');
     cout << " |";
 }
@@ -30,7 +33,7 @@ int Table:: getMaxLen(List<string> names) {
     int max = 0;
     for (string str : names)
     {
-        int len = str.length();
+        int len = str.size();
         max = len > max ? len : max;
     }
     return max + 4;
@@ -58,8 +61,8 @@ void Table::DrawTable(List<List<string>> lines, List<string> columns, string tit
     }
 
     drawBorder(tableWidth);
-    if (title.length()) {
-        formatColumn(title, title.length(), tableWidth, true);
+    if (title.size()) {
+        formatColumn(title, title.size(), tableWidth, true);
         drawBorder(tableWidth);
     }
 
