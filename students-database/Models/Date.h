@@ -1,11 +1,11 @@
 #pragma once
 
 struct Date {
-	unsigned short int Day;
-	unsigned short int Month;
-	unsigned short int Year;
+	int Day;
+	int Month;
+	int Year;
 
-    unsigned short int GetDay() {
+    int GetDay() {
         return this->Day;
     }
 
@@ -13,7 +13,7 @@ struct Date {
         this->Day = day;
     }
 
-    unsigned short int GetMonth() {
+    int GetMonth() {
         return this->Month;
     }
 
@@ -21,7 +21,7 @@ struct Date {
         this->Month = month;
     }
 
-    unsigned short int GetYear() {
+    int GetYear() {
         return this->Year;
     }
 
