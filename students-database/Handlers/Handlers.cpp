@@ -25,6 +25,8 @@ void Handlers::DrawStudentsHandler(List<Student> students) {
 void Handlers::AddStudentHandler() {
 	Student newStudent = {};
 	int gender;
+    bool alreadyExists;
+
 	cout << "¬ведите фамилию студента\n";
 	ConsoleInteraction::GetValue(newStudent.Surname, true);
 
@@ -55,8 +57,12 @@ void Handlers::AddStudentHandler() {
 	cout << "¬ведите группу студента\n";
 	ConsoleInteraction::GetValue(newStudent.Group);
 
-	cout << "¬ведите номер зачетной книжки студента\n";
-	ConsoleInteraction::GetValue(newStudent.RecordBook);
+    do {
+        cout << "¬ведите номер зачетной книжки студента\n";
+        ConsoleInteraction::GetValue(newStudent.RecordBook);
+        alreadyExists = Tools::FindStudentByRecordBook(newStudent.RecordBook);
+        if(alreadyExists) cout << "—тудент с таким номером зачетной книжки уже существует\n";
+    } while(alreadyExists);
 
 	do {
 		cout << "¬ведите пол студента\n0 - женщина\n1 - мужчина\n2 - небинарна€ личность\n";
@@ -73,8 +79,10 @@ void Handlers::AddStudentHandler() {
 		}
 	} while (gender > 1 || gender < 0);
 
-	cout << "¬ведите количество сданных сессий (максимум 9)\n";
-	ConsoleInteraction::GetValue(newStudent.SessionCount);
+    do {
+        cout << "¬ведите количество сданных сессий (максимум 9)\n";
+        ConsoleInteraction::GetValue(newStudent.SessionCount);
+    } while(newStudent.SessionCount > 9 || newStudent.SessionCount < 0);
 
 	for (int i = 0; i < newStudent.SessionCount; i++) {
 		newStudent.StudentSession[i].Semester = i + 1;
@@ -87,7 +95,7 @@ void Handlers::AddStudentHandler() {
 			ConsoleInteraction::GetValue(newStudent.StudentSession[i].Subjects[j].Mark);
 		}
 	}
-	FileInteraction::AddStudent({ newStudent });
+	FileInteraction::AddStudent({newStudent });
 }
 
 void Handlers::EditStudentHandler() {
