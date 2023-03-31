@@ -23,18 +23,25 @@ string Tools::DateToString(Date date) {
     char day[10 + sizeof(char)];
     char month[10 + sizeof(char)];
     char year[10 + sizeof(char)];
+    char editedValue[10 + sizeof(char)] = "0";
 
-    sprintf(day, "%hu", date.Day);
-    sprintf(month, "%hu", date.Month);
-    sprintf(year, "%hu", date.Year);
+    string finalDate;
+
+    sprintf(day, "%d", date.Day);
+    sprintf(month, "%d", date.Month);
+    sprintf(year, "%d", date.Year);
 
     strcat_s(day, ".");
     strcat_s(month, ".");
 
-    string finalDate;
+    strcat_s(editedValue, day);
+    finalDate += strlen(day) == 2 ? editedValue : day;
+    strcpy_s(editedValue, "0");
 
-    finalDate += day;
-    finalDate += month;
+    strcat_s(editedValue, month);
+    finalDate += strlen(month) == 2 ? editedValue : month;
+    strcpy_s(editedValue, "0");
+
     finalDate += year;
 
 	return finalDate;
