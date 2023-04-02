@@ -352,12 +352,9 @@ void Handlers::SortStudentsHandler() {
 	
 	Student::SortByGenderAndMarks(gender, students, perfectStudents, goodStudents);
 
-    if(goodStudents.size()) {
-        cout << "\nСтуденты с оценками 3, 4 и 5:\n";
-        Handlers::DrawStudentsHandler(goodStudents);
-    }
+    cout << ((goodStudents.size() != 0) ? "\nСтуденты с оценками 3, 4 и 5:\n" : "Студентов с оценками 3, 4 и 5 нет\n");
+    if (goodStudents.size()) Handlers::DrawStudentsHandler(goodStudents);
 
-    else cout << "Студентов с оценками 3, 4 и 5 нет\n";
 
 	if (perfectStudents.size()) {
 		cout << "\nСтуденты с оценками 4 и 5:\n";
