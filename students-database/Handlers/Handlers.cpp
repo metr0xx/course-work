@@ -197,7 +197,6 @@ void Handlers::EditStudentHandler() {
 			ConsoleInteraction::GetValue(gender);
 			cout << gender << endl;
 			switch (gender) {
-				cout << gender << endl;
 			case 0: case 1:
 				studentsList[studentId].SetGender(gender);
 				cout << studentsList[studentId].Gender << endl << gender << endl;
@@ -352,9 +351,13 @@ void Handlers::SortStudentsHandler() {
 	} while (gender < 0 || gender > 1);
 	
 	Student::SortByGenderAndMarks(gender, students, perfectStudents, goodStudents);
-	
-	cout << "\nСтуденты с оценками 3, 4 и 5:\n";
-	Handlers::DrawStudentsHandler(goodStudents);
+
+    if(goodStudents.size()) {
+        cout << "\nСтуденты с оценками 3, 4 и 5:\n";
+        Handlers::DrawStudentsHandler(goodStudents);
+    }
+
+    else cout << "Студентов с оценками 3, 4 и 5 нет\n";
 
 	if (perfectStudents.size()) {
 		cout << "\nСтуденты с оценками 4 и 5:\n";
