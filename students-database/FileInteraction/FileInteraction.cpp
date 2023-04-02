@@ -6,8 +6,7 @@
 
 using namespace std;
 
-//const char* PATH = "C:/StudentsDB/DB.bin";
-const char* PATH = "C:/StudentsDB/NEWDB.bin";
+const char* PATH = "./DB.bin";
 
 List<Student> FileInteraction::ReadData() {
 	ifstream file(PATH, ios::binary);
