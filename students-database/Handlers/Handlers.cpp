@@ -2,20 +2,22 @@
 #include "../FileInteraction/FileInteraction.h"
 #include "../Table/Table.h"
 #include "../Tools/Tools.h"
-#include "../Tools/List.cpp"
 #include "Handlers.h"
 #include "../ConsoleInteraction/ConsloleInteraction.h"
 
 #define string List<char>
 
 void Handlers::DrawStudentsHandler(List<Student> students) {
-    if (students.size() == 0) {
+
+    if (!students.size()) {
+        cout << "В базе данных нет студентов\n";
         return;
     }
+
     List<string > studentColumnNames = {"Фамилия", "Имя", "Отчество", "Дата рождения", "Год поступления", "Факультет",
                                         "Кафедра", "Группа", "Номер зачетной книжки", "Пол"};
     List<string > examColumnNames = {"Номер семестра", "Название предмета", "Оценка"};
-//
+
     List<List<string>> studentLines = Tools::StructToString(students);
     List<List<string>> subjects;
 
@@ -73,7 +75,6 @@ void Handlers::AddStudentHandler() {
 
         ConsoleInteraction::GetValue(gender);
         switch (gender) {
-
             case 0:
             case 1:
                 newStudent.Gender = gender;
@@ -154,15 +155,15 @@ void Handlers::EditStudentHandler() {
             break;
         case 1:
             cout << "Введите новую фамилию студента\n";
-            ConsoleInteraction::GetValue(studentsList[studentId].Surname, 1);
+            ConsoleInteraction::GetValue(studentsList[studentId].Surname, true);
             break;
         case 2:
             cout << "Введите новое имя студента\n";
-            ConsoleInteraction::GetValue(studentsList[studentId].Name, 1);
+            ConsoleInteraction::GetValue(studentsList[studentId].Name, true);
             break;
         case 3:
             cout << "Введите новое отчество студента\n";
-            ConsoleInteraction::GetValue(studentsList[studentId].Patronymic, 1);
+            ConsoleInteraction::GetValue(studentsList[studentId].Patronymic, true);
             break;
         case 4:
             cout << "Введите число рождения студента\n";
@@ -182,19 +183,19 @@ void Handlers::EditStudentHandler() {
             break;
         case 8:
             cout << "Введите факультет студента\n";
-            ConsoleInteraction::GetValue(studentsList[studentId].Institute, 1);
+            ConsoleInteraction::GetValue(studentsList[studentId].Institute, true);
             break;
         case 9:
             cout << "Введите кафедру студента\n";
-            ConsoleInteraction::GetValue(studentsList[studentId].Department, 1);
+            ConsoleInteraction::GetValue(studentsList[studentId].Department, true);
             break;
         case 10:
             cout << "Введите группу студента\n";
-            ConsoleInteraction::GetValue(studentsList[studentId].Group, 1);
+            ConsoleInteraction::GetValue(studentsList[studentId].Group, true);
             break;
         case 11:
             cout << "Введите номер зачетной книжки студента\n";
-            ConsoleInteraction::GetValue(studentsList[studentId].RecordBook, 1);
+            ConsoleInteraction::GetValue(studentsList[studentId].RecordBook, true);
             break;
         case 12:
             do {
@@ -248,14 +249,16 @@ void Handlers::EditStudentHandler() {
                         } while (studentsList[studentId].StudentSession[sessionNumber].SubjectsCount > 10 ||
                                  studentsList[studentId].StudentSession[sessionNumber].SubjectsCount < 0);
 
-                        for (int i = 0; i < studentsList[studentId].StudentSession[sessionNumber].SubjectsCount; i++) {
-                            cout << "Введите название " << i + 1 << "-го предмета в сессии\n";
+                        for (int j = 0; j < studentsList[studentId].StudentSession[sessionNumber].SubjectsCount; j++) {
+                            cout << "Введите название " << j + 1 << "-го предмета в сессии\n";
                             ConsoleInteraction::GetValue(
-                                    studentsList[studentId].StudentSession[sessionNumber].Subjects[i].Name, 1);
+                                    studentsList[studentId].StudentSession[sessionNumber].Subjects[j].Name, true);
 
-                            cout << "Введите оценку за " << i + 1 << "-й предмет в сессии\n";
-                            studentsList[studentId].StudentSession[sessionNumber].Subjects[i].SetMark(
-                                    ConsoleInteraction::GetValue(value));
+                            cout << "Введите оценку за " << j + 1 << "-й предмет в сессии\n";
+                            do {
+                                studentsList[studentId].StudentSession[sessionNumber].Subjects[j].SetMark(
+                                        ConsoleInteraction::GetValue(value));
+                            } while (studentsList[studentId].StudentSession[sessionNumber].Subjects[j].GetMark());
                         }
                     }
                     break;
@@ -290,7 +293,7 @@ void Handlers::EditStudentHandler() {
                                 cout << "Введите название предмена\n";
                                 ConsoleInteraction::GetValue(
                                         studentsList[studentId].StudentSession[sessionEditNumber - 1].Subjects[
-                                                prevSubjectsCount + i].Name, 1);
+                                                prevSubjectsCount + i].Name, true);
                                 cout << "Введите оценку за предмет\n";
                                 studentsList[studentId].StudentSession[sessionEditNumber - 1].Subjects[
                                         prevSubjectsCount + i].SetMark(ConsoleInteraction::GetValue(value));
@@ -301,12 +304,15 @@ void Handlers::EditStudentHandler() {
 
                             break;
                         case 2:
-                            //TODO: draw subjects table
-                            if (prevSubjectsCount > 1) {
+                            cout << "Предметы студента в " << sessionEditNumber << "-ом семестре:\n";
+                            for(int i = 0; i < studentsList[studentId].StudentSession[sessionEditNumber - 1].GetSubjectsCount(); i++) {
+                                cout << i + 1 << " - " << studentsList[studentId].StudentSession[sessionEditNumber - 1].Subjects[i].Name << endl;
+                            }
+                            if (prevSubjectsCount >= 1) {
                                 do {
                                     cout << "Введите номер предмета, данные которого нужно изменить\n";
                                     ConsoleInteraction::GetValue(subjectEditNumber);
-                                } while (subjectEditNumber > prevSubjectsCount || subjectEditNumber < 0);
+                                } while (subjectEditNumber > prevSubjectsCount || subjectEditNumber <= 0);
                             }
 
                             cout << "1 - Изменить название\n2 - Изменить оценку\n\n0 - В главное меню\n";
@@ -318,7 +324,7 @@ void Handlers::EditStudentHandler() {
                                     cout << "Введите название предмета под номером " << subjectEditNumber << endl;
                                     ConsoleInteraction::GetValue(
                                             studentsList[studentId].StudentSession[sessionEditNumber - 1].Subjects[
-                                                    subjectEditNumber - 1].Name, 1);
+                                                    subjectEditNumber - 1].Name, true);
                                     break;
                                 case 2:
                                     cout << "Введите оценку за предмет "
@@ -366,22 +372,15 @@ void Handlers::SortStudentsHandler() {
     List<Student> perfectStudents;
 
     cout << "Введите пол студента\n0 - Женщина\n1 - Мужчина\n";
-    do {
-        ConsoleInteraction::GetValue(gender);
-        if (gender < 0 || gender > 1) cout << "Нужно ввести либо 0, либо 1\n";
-    } while (gender < 0 || gender > 1);
+
+    ConsoleInteraction::GetValue(gender);
+
 
     Student::SortByGenderAndMarks(gender, students, perfectStudents, goodStudents);
 
     cout << (goodStudents.size() ? "\nСтуденты с оценками 3, 4 и 5:\n" : "Студентов с оценками 3, 4 и 5 нет\n");
     Handlers::DrawStudentsHandler(goodStudents);
 
-
-    if (perfectStudents.size()) {
-        cout << "\nСтуденты с оценками 4 и 5:\n";
-        Handlers::DrawStudentsHandler(perfectStudents);
-        return;
-    }
-
-    cout << "Студентов с оценками 4 и 5 нет\n";
+    cout << (perfectStudents.size() ? "\nСтуденты с оценками 4 и 5:\n" : "Студентов с оценками 4 и 5 нет\n");
+    Handlers::DrawStudentsHandler(perfectStudents);
 }
