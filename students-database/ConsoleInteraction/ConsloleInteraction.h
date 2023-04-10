@@ -5,18 +5,17 @@ using namespace std;
 
 struct ConsoleInteraction {
 
-	static void Start();
+    [[noreturn]] static void Start();
 
-	template<typename K>
-	static K GetValue(K& value) {
-		while (!(cin >> value) || (cin.peek() != '\n'))
-		{
-			cin.clear();
-			while (cin.get() != '\n');
-;			cout << "Неверное значение перематра\n";
-		}
+    template<typename K>
+    static K GetValue(K &value) {
+        while (!(cin >> value) || (cin.peek() != '\n')) {
+            cin.clear();
+            while (cin.get() != '\n');;
+            cout << "Неверное значение перематра\n";
+        }
         return value;
-	}
+    }
 
     static void GetValue(char value[], bool afterInt = false) {
         char inputValue[100];
