@@ -132,6 +132,13 @@ public:
         data = newData;
     }
 
+    bool contains(T elem) {
+        for(int i = 0; i < this->length; i++) {
+            if(this->data[i] == elem) return true;
+        }
+        return false;
+    }
+
     List<T> operator + (List<T> list2) {
         List<T> res = *new List();
         res += *this;
