@@ -3,16 +3,22 @@
 #include "../Tools/List.cpp"
 #include <string>
 #include <windows.h>
+#include "../Tools/List.cpp"
 
 #pragma once
 
 using namespace std;
 
 class Student {
-public:
     char Surname[100];
     char Name[100];
     char Patronymic[100];
+
+    static bool correctName(char value[]);
+
+    static void sortStudentsByAlphabet(List<Student> &students);
+
+public:
     Date BirthData;
     unsigned short int AdmissionYear;
     char Institute[100];
@@ -23,9 +29,19 @@ public:
     Session StudentSession[9];
     int SessionCount;
 
+    bool SetSurname(char surname[]);
+
+    char *GetSurname();
+
+    bool SetName(char name[]);
+
+    char *GetName();
+
+    bool SetPatronymic(char patronymic[]);
+
+    char *GetPatronymic();
+
     static void SortByGenderAndMarks(bool gender, const List<Student> &students, List<Student> &perfectStudents,
                                      List<Student> &goodStudents);
 
-private:
-    static void sortStudentsByAlphabet(List<Student> &students);
 };

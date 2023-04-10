@@ -52,9 +52,9 @@ List<List<string>> Tools::StructToString(List<Student> students) {
 
 	for (auto& student : students) {
 		formattedStudents.add({
-			student.Surname,
-			student.Name,
-			student.Patronymic,
+			student.GetSurname(),
+			student.GetName(),
+			student.GetPatronymic(),
 			Tools::DateToString(student.BirthData),
 			to_string(student.AdmissionYear),
 			student.Institute,

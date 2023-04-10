@@ -34,15 +34,22 @@ void Handlers::AddStudentHandler() {
     Student newStudent = {};
     int gender;
     bool alreadyExists;
+    char value[100];
 
-    cout << "¬ведите фамилию студента\n";
-    ConsoleInteraction::GetValue(newStudent.Surname, true);
+    do {
+        cout << "¬ведите фамилию студента\n";
+        ConsoleInteraction::GetValue(value, true);
+    } while (!newStudent.SetSurname(value));
 
-    cout << "¬ведите им€ студента\n";
-    ConsoleInteraction::GetValue(newStudent.Name);
+    do {
+        cout << "¬ведите им€ студента\n";
+        ConsoleInteraction::GetValue(value);
+    } while (!newStudent.SetName(value));
 
-    cout << "¬ведите отчество студента\n";
-    ConsoleInteraction::GetValue(newStudent.Patronymic);
+    do {
+        cout << "¬ведите отчество студента\n";
+        ConsoleInteraction::GetValue(value);
+    } while (!newStudent.SetPatronymic(value));
 
     cout << "¬ведите число рождени€ студента\n";
     ConsoleInteraction::GetValue(newStudent.BirthData.Day);
@@ -108,9 +115,8 @@ void Handlers::AddStudentHandler() {
 
 void Handlers::EditStudentHandler() {
     int value;
-
+    char sValue[100];
     List<Student> studentsList = FileInteraction::ReadData();
-
     int studentId = -1;
     int param;
     int sessionParam;
@@ -156,16 +162,22 @@ void Handlers::EditStudentHandler() {
         case 0:
             break;
         case 1:
-            cout << "¬ведите новую фамилию студента\n";
-            ConsoleInteraction::GetValue(studentsList[studentId].Surname, true);
+            do {
+                cout << "¬ведите новую фамилию студента\n";
+                ConsoleInteraction::GetValue(sValue, true);
+            } while (!studentsList[studentId].SetSurname(sValue));
             break;
         case 2:
-            cout << "¬ведите новое им€ студента\n";
-            ConsoleInteraction::GetValue(studentsList[studentId].Name, true);
+            do {
+                cout << "¬ведите новое студента\n";
+                ConsoleInteraction::GetValue(sValue);
+            } while (!studentsList[studentId].SetName(sValue));
             break;
         case 3:
-            cout << "¬ведите новое отчество студента\n";
-            ConsoleInteraction::GetValue(studentsList[studentId].Patronymic, true);
+            do {
+                cout << "¬ведите новое отчество студента\n";
+                ConsoleInteraction::GetValue(sValue);
+            } while (!studentsList[studentId].SetPatronymic(sValue));
             break;
         case 4:
             cout << "¬ведите число рождени€ студента\n";
