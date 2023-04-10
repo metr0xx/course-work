@@ -70,6 +70,10 @@ public:
         return data[i];
     }
 
+    T* getList() {
+        return this->data;
+    }
+
     void print() {
         for(int i = 0; i < this->length; i++) {
             std::cout << this->data[i];
@@ -128,21 +132,21 @@ public:
         data = newData;
     }
 
-    friend List<T> operator + (List<T> s, List<T> ch) {
+    List<T> operator + (List<T> list2) {
         List<T> res = *new List();
-        for (auto k : s) {
-            res.add(k);
-        }
-        for (auto k : ch) {
-            res.add(k);
-        }
+        res += *this;
+        res += list2;
         return res;
     }
 
-    List<T> operator += (List<T> ch) {
-        for (auto k : ch) {
-            this->add(k);
-        }
+    List<T> operator += (List<T> list2) {
+        T* newData = new T[size()+list2.size()];
+        memcpy(newData, data, sizeof(T)*size());
+        memcpy(&newData[size()], list2.getList(),sizeof(T)*list2.size());
+        delete data;
+        length = size()+list2.size();
+        data = newData;
         return *this;
     }
+
 };
