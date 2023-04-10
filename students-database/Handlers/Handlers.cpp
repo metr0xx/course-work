@@ -19,6 +19,8 @@ void Handlers::DrawStudentsHandler(List<Student> students) {
     List<string > examColumnNames = {"Номер семестра", "Название предмета", "Оценка"};
 
     List<List<string>> studentLines = Tools::StructToString(students);
+
+
     List<List<string>> subjects;
 
     for (int i = 0; i < studentLines.size(); i++) {
@@ -167,19 +169,19 @@ void Handlers::EditStudentHandler() {
             break;
         case 4:
             cout << "Введите число рождения студента\n";
-            studentsList[studentId].BirthData.SetDay(ConsoleInteraction::GetValue(value));
+            studentsList[studentId].BirthData.Day = ConsoleInteraction::GetValue(value);
             break;
         case 5:
             cout << "Введите месяц рождения студента\n";
-            studentsList[studentId].BirthData.SetMonth(ConsoleInteraction::GetValue(value));
+            studentsList[studentId].BirthData.Month = ConsoleInteraction::GetValue(value);
             break;
         case 6:
             cout << "Введите год рождения студента\n";
-            studentsList[studentId].BirthData.SetYear(ConsoleInteraction::GetValue(value));
+            studentsList[studentId].BirthData.Year = ConsoleInteraction::GetValue(value);
             break;
         case 7:
             cout << "Введите год поступления в институт студента\n";
-            studentsList[studentId].SetAdmissionYear(ConsoleInteraction::GetValue(value));
+            studentsList[studentId].AdmissionYear = ConsoleInteraction::GetValue(value);
             break;
         case 8:
             cout << "Введите факультет студента\n";
@@ -206,7 +208,7 @@ void Handlers::EditStudentHandler() {
                 switch (gender) {
                     case 0:
                     case 1:
-                        studentsList[studentId].SetGender(gender);
+                        studentsList[studentId].Gender = gender;
                         cout << studentsList[studentId].Gender << endl << gender << endl;
                         break;
                     case 2:
@@ -238,14 +240,14 @@ void Handlers::EditStudentHandler() {
 
                     for (int i = 0; i < newSessionsCount; i++) {
 
-                        sessionNumber = studentsList[studentId].GetSessionCount() + 1;
-                        studentsList[studentId].SetSessionCount(sessionNumber);
-                        studentsList[studentId].StudentSession[sessionNumber].SetSemester(sessionNumber + 1);
+                        sessionNumber = studentsList[studentId].SessionCount + 1;
+                        studentsList[studentId].SessionCount = sessionNumber;
+                        studentsList[studentId].StudentSession[sessionNumber].Semester = sessionNumber + 1;
 
                         do {
                             cout << "Введите количество предметов в сессии (максимум 10)\n\n0 - В главное меню\n";
-                            studentsList[studentId].StudentSession[sessionNumber].SetSubjectsCount(
-                                    ConsoleInteraction::GetValue(value));
+                            studentsList[studentId].StudentSession[sessionNumber].SubjectsCount =
+                                    ConsoleInteraction::GetValue(value);
                         } while (studentsList[studentId].StudentSession[sessionNumber].SubjectsCount > 10 ||
                                  studentsList[studentId].StudentSession[sessionNumber].SubjectsCount < 0);
 
@@ -256,9 +258,9 @@ void Handlers::EditStudentHandler() {
 
                             cout << "Введите оценку за " << j + 1 << "-й предмет в сессии\n";
                             do {
-                                studentsList[studentId].StudentSession[sessionNumber].Subjects[j].SetMark(
-                                        ConsoleInteraction::GetValue(value));
-                            } while (studentsList[studentId].StudentSession[sessionNumber].Subjects[j].GetMark());
+                                studentsList[studentId].StudentSession[sessionNumber].Subjects[j].Mark =
+                                        ConsoleInteraction::GetValue(value);
+                            } while (studentsList[studentId].StudentSession[sessionNumber].Subjects[j].Mark);
                         }
                     }
                     break;
@@ -296,26 +298,32 @@ void Handlers::EditStudentHandler() {
                                                 prevSubjectsCount + i].Name, true);
                                 cout << "Введите оценку за предмет\n";
                                 studentsList[studentId].StudentSession[sessionEditNumber - 1].Subjects[
-                                        prevSubjectsCount + i].SetMark(ConsoleInteraction::GetValue(value));
-                                studentsList[studentId].StudentSession[sessionEditNumber - 1].SetSubjectsCount(
-                                        studentsList[studentId].StudentSession[sessionEditNumber -
-                                                                               1].GetSubjectsCount() + 1);
+                                        prevSubjectsCount + i].Mark = ConsoleInteraction::GetValue(value);
+                                studentsList[studentId].StudentSession[sessionEditNumber - 1].SubjectsCount =
+                                        studentsList[studentId].StudentSession[sessionEditNumber - 1].SubjectsCount + 1;
                             }
 
                             break;
                         case 2:
                             cout << "Предметы студента в " << sessionEditNumber << "-ом семестре:\n";
-                            for(int i = 0; i < studentsList[studentId].StudentSession[sessionEditNumber - 1].GetSubjectsCount(); i++) {
-                                cout << i + 1 << " - " << studentsList[studentId].StudentSession[sessionEditNumber - 1].Subjects[i].Name << endl;
+                            for (int i = 0; i < studentsList[studentId].StudentSession[sessionEditNumber -
+                                                                                       1].SubjectsCount; i++) {
+                                cout << i + 1 << " - "
+                                     << studentsList[studentId].StudentSession[sessionEditNumber - 1].Subjects[i].Name
+                                     << endl;
                             }
-                            if (prevSubjectsCount >= 1) {
+                            if (prevSubjectsCount > 1) {
                                 do {
                                     cout << "Введите номер предмета, данные которого нужно изменить\n";
                                     ConsoleInteraction::GetValue(subjectEditNumber);
                                 } while (subjectEditNumber > prevSubjectsCount || subjectEditNumber <= 0);
                             }
 
-                            cout << "1 - Изменить название\n2 - Изменить оценку\n\n0 - В главное меню\n";
+                            cout << "1 - Изменить название, 2 - Изменить оценку за предмет " <<
+                                 studentsList[studentId].StudentSession[sessionEditNumber - 1].Subjects[
+                                         prevSubjectsCount - 1].Name
+                                 << endl << "0 - В главное меню\n";
+
                             ConsoleInteraction::GetValue(subjectEditParam);
                             switch (subjectEditParam) {
                                 case 0:
@@ -331,7 +339,7 @@ void Handlers::EditStudentHandler() {
                                          << studentsList[studentId].StudentSession[sessionEditNumber - 1].Subjects[
                                                  subjectEditNumber - 1].Name << endl;
                                     studentsList[studentId].StudentSession[sessionEditNumber - 1].Subjects[
-                                            subjectEditNumber - 1].SetMark(ConsoleInteraction::GetValue(value));
+                                            subjectEditNumber - 1].Mark = ConsoleInteraction::GetValue(value);
                                     break;
                             }
                             break;
