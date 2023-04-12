@@ -20,7 +20,6 @@ void Handlers::DrawStudentsHandler(List<Student> students) {
 
     List<List<string>> studentLines = Tools::StructToString(students);
 
-
     List<List<string>> subjects;
 
     for (int i = 0; i < studentLines.size(); i++) {
@@ -32,7 +31,7 @@ void Handlers::DrawStudentsHandler(List<Student> students) {
 
 void Handlers::AddStudentHandler() {
     Student newStudent = {};
-    int gender;
+    int val;
     bool alreadyExists;
     char value[100];
 
@@ -51,17 +50,28 @@ void Handlers::AddStudentHandler() {
         ConsoleInteraction::GetValue(value);
     } while (!newStudent.SetPatronymic(value));
 
-    cout << "¬ведите число рождени€ студента\n";
-    ConsoleInteraction::GetValue(newStudent.BirthData.Day);
+    do {
+        do {
+            cout << "¬ведите число рождени€ студента\n";
+            ConsoleInteraction::GetValue(val);
+        } while (!newStudent.BirthData.SetDay(val));
 
-    cout << "¬ведите мес€ц рождени€ студента (от 1 до 12)\n";
-    ConsoleInteraction::GetValue(newStudent.BirthData.Month);
+        do {
+            cout << "¬ведите мес€ц рождени€ студента (от 1 до 12)\n";
+            ConsoleInteraction::GetValue(val);
+        } while (!newStudent.BirthData.SetMonth(val));
 
-    cout << "¬ведите год рождени€ студента\n";
-    ConsoleInteraction::GetValue(newStudent.BirthData.Year);
+        do {
+            cout << "¬ведите год рождени€ студента\n";
+            ConsoleInteraction::GetValue(val);
+        } while (!newStudent.BirthData.SetYear(val));
+    } while (!newStudent.BirthData.CheckDate());
 
-    cout << "¬ведите год поступлени€ в институт студента\n";
-    ConsoleInteraction::GetValue(newStudent.AdmissionYear);
+    do {
+        cout << "¬ведите год поступлени€ в институт студента\n";
+        ConsoleInteraction::GetValue(value);
+    } while (!newStudent.SetAdmissionYear(val));
+
 
     cout << "¬ведите факультет студента\n";
     ConsoleInteraction::GetValue(newStudent.Institute, true);
@@ -82,17 +92,17 @@ void Handlers::AddStudentHandler() {
     do {
         cout << "¬ведите пол студента\n0 - женщина\n1 - мужчина\n2 - небинарна€ личность\n";
 
-        ConsoleInteraction::GetValue(gender);
-        switch (gender) {
+        ConsoleInteraction::GetValue(val);
+        switch (val) {
             case 0:
             case 1:
-                newStudent.Gender = gender;
+                newStudent.Gender = val;
                 break;
             case 2:
                 cout << "√ендера всего 2 :)\n";
                 break;
         }
-    } while (gender > 1 || gender < 0);
+    } while (val > 1 || val < 0);
 
     do {
         cout << "¬ведите количество сданных сессий (максимум 9)\n";
@@ -180,21 +190,33 @@ void Handlers::EditStudentHandler() {
             } while (!studentsList[studentId].SetPatronymic(sValue));
             break;
         case 4:
-            cout << "¬ведите число рождени€ студента\n";
-            studentsList[studentId].BirthData.Day = ConsoleInteraction::GetValue(value);
+            do {
+                cout << "¬ведите число рождени€ студента\n";
+                ConsoleInteraction::GetValue(value);
+            } while (!studentsList[studentId].BirthData.SetDay(value) ||
+                     !studentsList[studentId].BirthData.CheckDate());
             break;
         case 5:
-            cout << "¬ведите мес€ц рождени€ студента\n";
-            studentsList[studentId].BirthData.Month = ConsoleInteraction::GetValue(value);
+            do {
+                cout << "¬ведите мес€ц рождени€ студента\n";
+                ConsoleInteraction::GetValue(value);
+            } while (!studentsList[studentId].BirthData.SetMonth(value) ||
+                     !studentsList[studentId].BirthData.CheckDate());
             break;
         case 6:
-            cout << "¬ведите год рождени€ студента\n";
-            studentsList[studentId].BirthData.Year = ConsoleInteraction::GetValue(value);
+            do {
+                cout << "¬ведите год рождени€ студента\n";
+                ConsoleInteraction::GetValue(value);
+            } while (!studentsList[studentId].BirthData.SetYear(value) ||
+                     !studentsList[studentId].BirthData.CheckDate());
             break;
         case 7:
-            cout << "¬ведите год поступлени€ в институт студента\n";
-            studentsList[studentId].AdmissionYear = ConsoleInteraction::GetValue(value);
+            do {
+                cout << "¬ведите год поступлени€ в институт студента\n";
+                ConsoleInteraction::GetValue(value);
+            } while (!studentsList[studentId].SetAdmissionYear(value));
             break;
+
         case 8:
             cout << "¬ведите факультет студента\n";
             ConsoleInteraction::GetValue(studentsList[studentId].Institute, true);
