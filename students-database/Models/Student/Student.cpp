@@ -1,8 +1,8 @@
 #include <iostream>
 #include <algorithm>
-#include <windows.h>
-#include "../Models/Student.h"
-#include "../Tools/List.cpp"
+#include <Windows.h>
+#include "Student.h"
+#include "../../Tools/List.cpp"
 
 #define string List<char>
 
@@ -54,6 +54,18 @@ bool Student::SetPatronymic(char patronymic[]) {
 
 char *Student::GetPatronymic() {
     return this->Patronymic;
+}
+
+bool Student::SetAdmissionYear(int admissionYear) {
+    if (admissionYear < 1970 || admissionYear > 2023) {
+        cout << "Неверное значение года\n";
+        return false;
+    };
+    return true;
+}
+
+int Student::GetAdmissionYear() {
+    return this->AdmissionYear;
 }
 
 void Student::sortStudentsByAlphabet(List<Student> &students) {
