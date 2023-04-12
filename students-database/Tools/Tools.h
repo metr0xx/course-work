@@ -1,6 +1,6 @@
 #include <vector>
-#include "../Models/Date.h"
-#include "../Models/Student.h"
+#include "../Models/Date/Date.h"
+#include "../Models/Student/Student.h"
 #include "../Models/Session.h"
 #include "../Tools/List.cpp"
 

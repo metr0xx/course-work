@@ -1,7 +1,7 @@
 #include "Tools.h"
-#include "../Models/Student.h"
+#include "../Models/Student/Student.h"
 #include "../FileInteraction/FileInteraction.h"
-#include "../Models/Date.h"
+#include "../Models/Date/Date.h"
 #include <string>
 #include <iostream>
 
@@ -27,9 +27,9 @@ string Tools::DateToString(Date date) {
 
     string finalDate;
 
-    sprintf(day, "%d", date.Day);
-    sprintf(month, "%d", date.Month);
-    sprintf(year, "%d", date.Year);
+    sprintf(day, "%d", date.GetDay());
+    sprintf(month, "%d", date.GetMonth());
+    sprintf(year, "%d", date.GetYear());
 
     strcat_s(day, ".");
     strcat_s(month, ".");
@@ -56,7 +56,7 @@ List<List<string>> Tools::StructToString(List<Student> students) {
 			student.GetName(),
 			student.GetPatronymic(),
 			Tools::DateToString(student.BirthData),
-			to_string(student.AdmissionYear),
+			to_string(student.GetAdmissionYear()),
 			student.Institute,
 			student.Department,
 			student.Group,
