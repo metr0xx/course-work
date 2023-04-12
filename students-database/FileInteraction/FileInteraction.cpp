@@ -3,7 +3,7 @@
 
 using namespace std;
 
-const char *PATH = "./DB.bin";
+const char *PATH = "C:\\StudentsDB\\NEW.txt";
 
 List<Student> FileInteraction::ReadData() {
     ifstream file(PATH, ios::binary);

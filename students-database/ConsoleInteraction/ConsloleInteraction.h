@@ -5,13 +5,13 @@ using namespace std;
 
 struct ConsoleInteraction {
 
-    [[noreturn]] static void Start();
+    static void Start();
 
     template<typename K>
     static K GetValue(K &value) {
         while (!(cin >> value) || (cin.peek() != '\n')) {
             cin.clear();
-            while (cin.get() != '\n');;
+            while (cin.get() != '\n');
             cout << "Неверное значение перематра\n";
         }
         return value;
