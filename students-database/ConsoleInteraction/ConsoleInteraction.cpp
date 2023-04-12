@@ -1,19 +1,22 @@
 #include <iostream>
 #include "ConsloleInteraction.h"
 #include "../FileInteraction/FileInteraction.h"
-#include "../Table/Table.h"
+#include "../CryptManager/CryptManager.cpp"
 #include "../Tools/Tools.h"
 #include "../Handlers/Handlers.h"
 
 using namespace std;
 
-[[noreturn]] void ConsoleInteraction::Start() {
+void ConsoleInteraction::Start() {
 
     int command;
 
+    CryptManager cryptManager;
+    cryptManager.Crypt();
+
     while (true) {
         cout << "Доступные команды:\n1 - Показать список студентов\n2 - Добавить нового студента\n" <<
-             "3 - Редактировать студента\n4 - Удалить студента\n5 - Дополнительное задание (вариант 53)\n";
+             "3 - Редактировать студента\n4 - Удалить студента\n5 - Дополнительное задание (вариант 53)\n6 - Выход\n";
 
         ConsoleInteraction::GetValue(command);
 
@@ -33,7 +36,9 @@ using namespace std;
             case 5:
                 Handlers::SortStudentsHandler();
                 break;
-
+            case 6:
+                cryptManager.Decrypt();
+                return;
         }
     }
 }
