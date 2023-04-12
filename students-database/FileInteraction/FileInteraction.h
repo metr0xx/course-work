@@ -1,4 +1,4 @@
-#include "../Models/Student.h"
+#include "../Models/Student/Student.h"
 #include "../Tools/List.cpp"
 #include <string>
 using namespace std;
