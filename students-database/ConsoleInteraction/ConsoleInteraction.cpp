@@ -42,3 +42,27 @@ void ConsoleInteraction::Start() {
         }
     }
 }
+
+template<typename K>
+K ConsoleInteraction::GetValue(K &value) {
+    while (!(cin >> value) || (cin.peek() != '\n')) {
+        cin.clear();
+        while (cin.get() != '\n');
+        cout << "Неверное значение перематра\n";
+    }
+    return value;
+}
+
+void ConsoleInteraction::GetValue(char value[], bool afterInt) {
+    char inputValue[100];
+
+    if (afterInt) {
+        getchar();
+    }
+
+    while (!gets_s(inputValue, 100)) {
+        cout << "Неверное строковое значение\n";
+    }
+
+    strcpy(value, inputValue);
+}
