@@ -2,24 +2,23 @@
 #include <algorithm>
 #include <Windows.h>
 #include "Student.h"
-#include "../../Tools/List.cpp"
 
 #define string List<char>
 
 using namespace std;
 
 bool Student::correctName(char value[]) {
-    string badChars = "0123456789,./|¹;:?!@#$%^&*()_+==*-<>`~{}[]";
-    for (int i = 0; i < strlen(value); i++) {
+    string badChars = "àáâãäå¸æçèéêëìíîïðñòóôõö÷øùúûüýþÿÀÁÂÃÄÅ¨ÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖ×ØÙÚÛÜÝÞß";
 
-        if (badChars.contains(value[i])) return false;
+    for (int i = 0; i < strlen(value); i++) {
+        if (!badChars.contains(value[i])) return false;
     }
     return true;
 }
 
 bool Student::SetSurname(char surname[]) {
     if (correctName(surname)) {
-        strcpy_s(this->Surname, surname);
+        strcpy_s(this->_surname, surname);
         return true;
     }
     cout << "Íåäîïóñòèìûå ñèìâîëû â ôàìèëèè\n";
@@ -27,12 +26,12 @@ bool Student::SetSurname(char surname[]) {
 }
 
 char *Student::GetSurname() {
-    return this->Surname;
+    return this->_surname;
 }
 
 bool Student::SetName(char name[]) {
     if (correctName(name)) {
-        strcpy_s(this->Name, name);
+        strcpy_s(this->_name, name);
         return true;
     }
     cout << "Íåäîïóñòèìûå ñèìâîëû â èìåíè\n";
@@ -40,12 +39,12 @@ bool Student::SetName(char name[]) {
 }
 
 char *Student::GetName() {
-    return this->Name;
+    return this->_name;
 }
 
 bool Student::SetPatronymic(char patronymic[]) {
     if (correctName(patronymic)) {
-        strcpy_s(this->Patronymic, patronymic);
+        strcpy_s(this->_patronymic, patronymic);
         return true;
     }
     cout << "Íåäîïóñòèìûå ñèìâîëû â îò÷åñòâå\n";
@@ -53,7 +52,7 @@ bool Student::SetPatronymic(char patronymic[]) {
 }
 
 char *Student::GetPatronymic() {
-    return this->Patronymic;
+    return this->_patronymic;
 }
 
 bool Student::SetAdmissionYear(int admissionYear) {
@@ -61,22 +60,22 @@ bool Student::SetAdmissionYear(int admissionYear) {
         cout << "Íåâåðíîå çíà÷åíèå ãîäà\n";
         return false;
     };
-    this->AdmissionYear = admissionYear;
+    this->_admissionYear = admissionYear;
     return true;
 }
 
 int Student::GetAdmissionYear() {
-    return this->AdmissionYear;
+    return this->_admissionYear;
 }
 
 void Student::sortStudentsByAlphabet(List<Student> &students) {
     sort(students.begin(), students.end(), [](Student const s1, Student const s2) -> bool {
 
-        for (int i = 0; i < min(strlen(s1.Surname), strlen(s2.Surname)); i++) {
-            if (s1.Surname[i] == s2.Surname[i]) continue;
-            return s1.Surname[i] < s2.Surname[i];
+        for (int i = 0; i < min(strlen(s1._surname), strlen(s2._surname)); i++) {
+            if (s1._surname[i] == s2._surname[i]) continue;
+            return s1._surname[i] < s2._surname[i];
         }
-        return strlen(s1.Surname) < strlen(s2.Surname);
+        return strlen(s1._surname) < strlen(s2._surname);
     });
 
 

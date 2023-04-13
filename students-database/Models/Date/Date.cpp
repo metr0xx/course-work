@@ -4,18 +4,18 @@
 using namespace std;
 
 bool Date::CheckDate() {
-    bool bigYear = !(this->Year % 4);
+    bool bigYear = !(this->_year % 4);
     bool wrongDate = false;
-    switch (this->Month) {
+    switch (this->_month) {
         case 2:
-            if (this->Day > 29) wrongDate = true;
-            if (this->Day == 29 && !bigYear) wrongDate = true;
+            if (this->_day > 29) wrongDate = true;
+            if (this->_day == 29 && !bigYear) wrongDate = true;
             break;
         case 4:
         case 6:
         case 9:
         case 11:
-            if (this->Day == 31) wrongDate = true;
+            if (this->_day == 31) wrongDate = true;
     }
     if (wrongDate) cout << "Такой даты не существует\n";
 
@@ -28,13 +28,13 @@ bool Date::SetDay(int day) {
         return false;
     };
 
-    this->Day = day;
+    this->_day = day;
 
     return true;
 }
 
 int Date::GetDay() {
-    return this->Day;
+    return this->_day;
 }
 
 bool Date::SetMonth(int month) {
@@ -43,13 +43,13 @@ bool Date::SetMonth(int month) {
         return false;
     };
 
-    this->Month = month;
+    this->_month = month;
 
     return true;
 }
 
 int Date::GetMonth() {
-    return this->Month;
+    return this->_month;
 }
 
 bool Date::SetYear(int year) {
@@ -58,10 +58,10 @@ bool Date::SetYear(int year) {
         return false;
     };
 
-    this->Year = year;
+    this->_year = year;
     return true;
 }
 
 int Date::GetYear() {
-    return this->Year;
+    return this->_year;
 }

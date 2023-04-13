@@ -1,9 +1,9 @@
 #pragma once
 
 class Date {
-	int Day;
-	int Month;
-	int Year;
+	int _day;
+	int _month;
+	int _year;
 
 public:
     bool CheckDate();

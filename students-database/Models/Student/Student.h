@@ -4,28 +4,24 @@
 #include <string>
 #include <Windows.h>
 #include "../../Tools/List.cpp"
+#include "../Person.h"
 
 #pragma once
 
 using namespace std;
 
-class Student {
-    char Surname[100];
-    char Name[100];
-    char Patronymic[100];
-    int AdmissionYear;
+class Student : public Person {
+    int _admissionYear;
 
     static bool correctName(char value[]);
 
     static void sortStudentsByAlphabet(List<Student> &students);
 
 public:
-    Date BirthData;
     char Institute[100];
-    char Department[10];
-    char Group[15];
-    char RecordBook[10];
-    bool Gender;
+    char Department[20];
+    char Group[30];
+    char RecordBook[30];
     Session StudentSession[9];
     int SessionCount;
 
