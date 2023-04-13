@@ -45,8 +45,6 @@ public:
         command += this->pass;
         system(command.c_str());
 
-        cout << "from aboba1\n";
-
         if (remove("C:/StudentsDB/NEW.txt") != 0) {
             cout << "[ERROR] - deleting file" << endl;
         }
@@ -58,7 +56,6 @@ public:
 
         command = R"(OpenSSL-Win64\bin\openssl.exe rsautl -encrypt -inkey rsa.public -pubin -in key.txt -out key.txt.enc)";
         system(command.c_str());
-        cout << "from aboba2\n";
 
         if (remove("key.txt") != 0) {
             cout << "[ERROR] - deleting file" << endl;
