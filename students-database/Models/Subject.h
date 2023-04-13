@@ -9,5 +9,4 @@ class Subject {
 public:
     char Name[100];
     int Mark;
-
 };
