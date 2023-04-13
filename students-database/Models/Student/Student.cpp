@@ -61,6 +61,7 @@ bool Student::SetAdmissionYear(int admissionYear) {
         cout << "Неверное значение года\n";
         return false;
     };
+    this->AdmissionYear = admissionYear;
     return true;
 }
 

@@ -9,10 +9,8 @@
 
 void Handlers::DrawStudentsHandler(List<Student> students) {
 
-    if (!students.size()) {
-        cout << "В базе данных нет студентов\n";
-        return;
-    }
+    if (!students.size()) return;
+
 
     List<string > studentColumnNames = {"Фамилия", "Имя", "Отчество", "Дата рождения", "Год поступления", "Факультет",
                                         "Кафедра", "Группа", "Номер зачетной книжки", "Пол"};
@@ -69,7 +67,7 @@ void Handlers::AddStudentHandler() {
 
     do {
         cout << "Введите год поступления в институт студента\n";
-        ConsoleInteraction::GetValue(value);
+        ConsoleInteraction::GetValue(val);
     } while (!newStudent.SetAdmissionYear(val));
 
 
@@ -238,7 +236,7 @@ void Handlers::EditStudentHandler() {
                 cout << "Введите пол студента\n0 - женщина\n1 - мужчина\n2 - небинарная личность\n";
 
                 ConsoleInteraction::GetValue(gender);
-                cout << gender << endl;
+
                 switch (gender) {
                     case 0:
                     case 1:
@@ -407,16 +405,16 @@ void Handlers::DeleteStudentHandler() {
 }
 
 void Handlers::SortStudentsHandler() {
-    bool gender;
+    int gender;
 
     List<Student> students = FileInteraction::ReadData();
     List<Student> goodStudents;
     List<Student> perfectStudents;
 
-    cout << "Введите пол студента\n0 - Женщина\n1 - Мужчина\n";
-
-    ConsoleInteraction::GetValue(gender);
-
+    do {
+        cout << "Введите пол студента\n0 - женщина\n1 - мужчина\n";
+        ConsoleInteraction::GetValue(gender);
+    } while (gender > 1 || gender < 0);
 
     Student::SortByGenderAndMarks(gender, students, perfectStudents, goodStudents);
 
