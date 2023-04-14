@@ -64,8 +64,29 @@ bool Student::SetAdmissionYear(int admissionYear) {
     return true;
 }
 
-int Student::GetAdmissionYear() {
+int Student::GetAdmissionYear() const {
     return this->_admissionYear;
+}
+
+bool Student::findStudentByRecordBook(char *recordBook, List<Student> students) {
+
+    for (int i = 0; i < students.size(); i++) {
+        if (!strcmp(students[i].GetRecordBook(), recordBook)) { return i + 1; };
+    }
+    return false;
+}
+
+bool Student::SetRecordBook(char *recordBook, List<Student> students) {
+    if(findStudentByRecordBook(recordBook, students)) {
+        cout << "Студент с таким номером зачетной книжки уже существует\n";
+        return false;
+    }
+    strcpy_s(this->_recordBook, recordBook);
+    return true;
+}
+
+char *Student::GetRecordBook() {
+    return this->_recordBook;
 }
 
 void Student::sortStudentsByAlphabet(List<Student> &students) {

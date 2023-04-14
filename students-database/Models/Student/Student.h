@@ -12,6 +12,9 @@ using namespace std;
 
 class Student : public Person {
     int _admissionYear;
+    char _recordBook[30];
+
+    static bool findStudentByRecordBook(char recordBook[], List<Student> students);
 
     static bool correctName(char value[]);
 
@@ -21,7 +24,6 @@ public:
     char Institute[100];
     char Department[20];
     char Group[30];
-    char RecordBook[30];
     Session StudentSession[9];
     int SessionCount;
 
@@ -39,7 +41,12 @@ public:
 
     bool SetAdmissionYear(int admissionYear);
 
-    int GetAdmissionYear();
+    int GetAdmissionYear() const;
+
+    bool SetRecordBook(char recordBook[], List<Student> students);
+
+    char *GetRecordBook();
+
 
     static void SortByGenderAndMarks(bool gender, const List<Student> &students, List<Student> &perfectStudents,
                                      List<Student> &goodStudents);
