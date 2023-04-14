@@ -1,9 +1,13 @@
 #pragma once
 
+#include <string>
+
 class Date {
 	int _day;
 	int _month;
 	int _year;
+
+    std::string getMonthName();
 
 public:
     bool CheckDate();
