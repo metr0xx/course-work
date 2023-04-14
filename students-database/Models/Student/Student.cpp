@@ -21,7 +21,7 @@ bool Student::SetSurname(char surname[]) {
         strcpy_s(this->_surname, surname);
         return true;
     }
-    cout << "Недопустимые символы в фамилии\n";
+    cout << "Фамилия может содержать только символы русского алфавита\n";
     return false;
 }
 
@@ -34,7 +34,7 @@ bool Student::SetName(char name[]) {
         strcpy_s(this->_name, name);
         return true;
     }
-    cout << "Недопустимые символы в имени\n";
+    cout << "Имя может содержать только символы русского алфавита\n";
     return false;
 }
 
@@ -47,7 +47,7 @@ bool Student::SetPatronymic(char patronymic[]) {
         strcpy_s(this->_patronymic, patronymic);
         return true;
     }
-    cout << "Недопустимые символы в отчестве\n";
+    cout << "Отчество может содержать только символы русского алфавита\n";
     return false;
 }
 
@@ -57,7 +57,7 @@ char *Student::GetPatronymic() {
 
 bool Student::SetAdmissionYear(int admissionYear) {
     if (admissionYear < 1970 || admissionYear > 2023) {
-        cout << "Неверное значение года\n";
+        cout << "Неверное значение года (требуемый диапазон: от 1970 до 2023)\n";
         return false;
     };
     this->_admissionYear = admissionYear;
@@ -69,9 +69,8 @@ int Student::GetAdmissionYear() const {
 }
 
 bool Student::findStudentByRecordBook(char *recordBook, List<Student> students) {
-
-    for (int i = 0; i < students.size(); i++) {
-        if (!strcmp(students[i].GetRecordBook(), recordBook)) { return i + 1; };
+    for (auto & student : students) {
+        if (!strcmp(student.GetRecordBook(), recordBook)) return true;
     }
     return false;
 }
