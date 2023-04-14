@@ -9,16 +9,6 @@
 
 using namespace std;
 
-int Tools::FindStudentByRecordBook(char recordBook[]) {
-    List<Student> students = FileInteraction::ReadData();
-
-	for (int i = 0; i < students.size(); i++) {
-		if (!strcmp(students[i].RecordBook, recordBook)) { return i + 1; };
-	}
-	return 0;
-}
-
-
 string Tools::DateToString(Date date) {
     char day[10 + sizeof(char)];
     char month[10 + sizeof(char)];
@@ -60,7 +50,7 @@ List<List<string>> Tools::StructToString(List<Student> students) {
 			student.Institute,
 			student.Department,
 			student.Group,
-			student.RecordBook,
+			student.GetRecordBook(),
 			student.Gender ? "Ì" : "Æ"
 			});
 	}

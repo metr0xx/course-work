@@ -9,7 +9,6 @@
 using namespace std;
 
 struct Tools {
-	static int FindStudentByRecordBook(char recordBook[]);
 	static string DateToString(Date date);
 	static List<List<string>> StructToString(List<Student> students);
 	static List<List<string>> StructToString(Student& student);

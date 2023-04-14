@@ -29,6 +29,7 @@ void Handlers::DrawStudentsHandler(List<Student> students) {
 
 void Handlers::AddStudentHandler() {
     Student newStudent = {};
+    List<Student> students = FileInteraction::ReadData();
     int val;
     bool alreadyExists;
     char value[100];
@@ -55,7 +56,7 @@ void Handlers::AddStudentHandler() {
         } while (!newStudent.BirthData.SetDay(val));
 
         do {
-            cout << "Введите месяц рождения студента (от 1 до 12)\n";
+            cout << "Введите месяц рождения студента\n";
             ConsoleInteraction::GetValue(val);
         } while (!newStudent.BirthData.SetMonth(val));
 
@@ -82,10 +83,8 @@ void Handlers::AddStudentHandler() {
 
     do {
         cout << "Введите номер зачетной книжки студента\n";
-        ConsoleInteraction::GetValue(newStudent.RecordBook);
-        alreadyExists = Tools::FindStudentByRecordBook(newStudent.RecordBook);
-        if (alreadyExists) cout << "Студент с таким номером зачетной книжки уже существует\n";
-    } while (alreadyExists);
+        ConsoleInteraction::GetValue(value);
+    } while (!newStudent.SetRecordBook(value, students));
 
     do {
         cout << "Введите пол студента\n0 - женщина\n1 - мужчина\n2 - небинарная личность\n";
@@ -138,13 +137,11 @@ void Handlers::EditStudentHandler() {
     int gender;
     int prevSessionsCount;
 
-    if (!studentsList.size()) {
-        cout << "В базе данных нет студентов\n";
-        return;
-    }
+    if (!studentsList.size()) return;
+
     cout << "Введите номер студента, данные которого нужно изменить\n";
     for (int i = 0; i < studentsList.size(); i++) {
-        cout << i + 1 << " - " << studentsList[i].RecordBook << endl;
+        cout << i + 1 << " - " << studentsList[i].GetRecordBook() << endl;
     }
     cout << "\n0 - В главное меню\n";
 
@@ -228,8 +225,10 @@ void Handlers::EditStudentHandler() {
             ConsoleInteraction::GetValue(studentsList[studentId].Group, true);
             break;
         case 11:
+            do {
             cout << "Введите номер зачетной книжки студента\n";
-            ConsoleInteraction::GetValue(studentsList[studentId].RecordBook, true);
+            ConsoleInteraction::GetValue(sValue, true);
+            } while(!studentsList[studentId].SetRecordBook(sValue, studentsList));
             break;
         case 12:
             do {
@@ -392,7 +391,7 @@ void Handlers::DeleteStudentHandler() {
 
     cout << "Выберете номер студента, которого нужно удалить\n";
     for (int i = 0; i < students.size(); i++) {
-        cout << i + 1 << " - " << students[i].RecordBook << endl;
+        cout << i + 1 << " - " << students[i].GetRecordBook() << endl;
     }
     cout << "\n0 - В главное меню\n";
     do {

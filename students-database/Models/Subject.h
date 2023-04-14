@@ -5,8 +5,7 @@
 
 using namespace std;
 
-class Subject {
-public:
+struct Subject {
     char Name[100];
     int Mark;
 };
