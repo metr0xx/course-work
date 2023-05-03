@@ -12,11 +12,11 @@ void ConsoleInteraction::Start() {
     int command;
 
     CryptManager cryptManager;
-    cryptManager.Crypt();
+    cryptManager.Decrypt();
 
     while (true) {
-        cout << "Äîñòóïíûå êîìàíäû:\n1 - Ïîêàçàòü ñïèñîê ñòóäåíòîâ\n2 - Äîáàâèòü íîâîãî ñòóäåíòà\n" <<
-             "3 - Ðåäàêòèðîâàòü ñòóäåíòà\n4 - Óäàëèòü ñòóäåíòà\n5 - Äîïîëíèòåëüíîå çàäàíèå (âàðèàíò 53)\n6 - Âûõîä\n";
+        cout << "Ã„Ã®Ã±Ã²Ã³Ã¯Ã­Ã»Ã¥ ÃªÃ®Ã¬Ã Ã­Ã¤Ã»:\n1 - ÃÃ®ÃªÃ Ã§Ã Ã²Ã¼ Ã±Ã¯Ã¨Ã±Ã®Ãª Ã±Ã²Ã³Ã¤Ã¥Ã­Ã²Ã®Ã¢\n2 - Ã„Ã®Ã¡Ã Ã¢Ã¨Ã²Ã¼ Ã­Ã®Ã¢Ã®Ã£Ã® Ã±Ã²Ã³Ã¤Ã¥Ã­Ã²Ã \n" <<
+             "3 - ÃÃ¥Ã¤Ã ÃªÃ²Ã¨Ã°Ã®Ã¢Ã Ã²Ã¼ Ã±Ã²Ã³Ã¤Ã¥Ã­Ã²Ã \n4 - Ã“Ã¤Ã Ã«Ã¨Ã²Ã¼ Ã±Ã²Ã³Ã¤Ã¥Ã­Ã²Ã \n5 - Ã„Ã®Ã¯Ã®Ã«Ã­Ã¨Ã²Ã¥Ã«Ã¼Ã­Ã®Ã¥ Ã§Ã Ã¤Ã Ã­Ã¨Ã¥ (Ã¢Ã Ã°Ã¨Ã Ã­Ã² 53)\n6 - Ã‚Ã»ÃµÃ®Ã¤\n";
 
         ConsoleInteraction::GetValue(command);
 
@@ -37,7 +37,7 @@ void ConsoleInteraction::Start() {
                 Handlers::SortStudentsHandler();
                 break;
             case 6:
-                cryptManager.Decrypt();
+                cryptManager.Crypt();
                 return;
         }
     }
@@ -48,7 +48,7 @@ K ConsoleInteraction::GetValue(K &value) {
     while (!(cin >> value) || (cin.peek() != '\n')) {
         cin.clear();
         while (cin.get() != '\n');
-        cout << "Íåâåðíîå çíà÷åíèå ïåðåìàòðà\n";
+        cout << "ÃÃ¥Ã¢Ã¥Ã°Ã­Ã®Ã¥ Ã§Ã­Ã Ã·Ã¥Ã­Ã¨Ã¥ Ã¯Ã¥Ã°Ã¥Ã¬Ã Ã²Ã°Ã \n";
     }
     return value;
 }
@@ -61,7 +61,7 @@ void ConsoleInteraction::GetValue(char value[], bool afterInt) {
     }
 
     while (!gets_s(inputValue, 100)) {
-        cout << "Íåâåðíîå ñòðîêîâîå çíà÷åíèå\n";
+        cout << "ÃÃ¥Ã¢Ã¥Ã°Ã­Ã®Ã¥ Ã±Ã²Ã°Ã®ÃªÃ®Ã¢Ã®Ã¥ Ã§Ã­Ã Ã·Ã¥Ã­Ã¨Ã¥\n";
     }
 
     strcpy(value, inputValue);
